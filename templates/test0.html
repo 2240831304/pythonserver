@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <meta charset="UTF-8">
+    <title>Send to Obook</title>
+    <style>
+          a {
+            text-decoration: none;
+        }
+         #title{
+             {#background: gray;#}
+             height: 100px;
+             width: 100%;
+             border-style: none;
+         }
+         #user{
+             height: 100px;
+             width: 100%;
+             border-style: none;
+             margin: 50px 0;
+             text-align: center;
+         }
+         #function{
+             margin: 100px 0;
+             height: 30px;
+             width: 100%;
+             text-align: center;
+             {#border-style: none;#}
+             {#border: red;#}
+         }
+        #function a{
+            {#background-color:#FFA500;#}
+            float: left;
+            display:block;
+            height:30px;
+            width:30%;
+	    line-height: 30px;
+            text-align:center;
+            margin: 0 2px;
+            border:1px solid rgba(0,0,0,.2);
+            border-radius: 0.3em;
+	    background:rgba(0,0,0,.2);
+        }
+	#function a:hover{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+        <h2 id="title">国文obook电子阅读器</h2>
+        <a id="user">用户名:{{ value }}</a><br>
+        <div id="function">
+            <a id="upload" href="/templates/post.html?FromUserName={{ FromUserName }}" >上传本地图书</a>
+            <a id="lib" href="/templates/books.html?FromUserName={{ FromUserName }}" >查询我的书库</a>
+            <a id="show" href="/templates/bind.html?FromUserName={{ FromUserName }}">展示绑定终端</a>
+        </div>
+</body>
+</html>

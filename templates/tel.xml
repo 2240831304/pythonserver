@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<pushbook>
+    {% for o in obj %}
+    <book>
+        <bookid>{{ o.bookid }}</bookid>
+        <bookname>{{ o.bookname }}</bookname>
+        <bookurl>{{ o.url }}</bookurl>
+    </book>
+    {% endfor %}
+</pushbook>
+

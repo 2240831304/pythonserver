@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://blog.csdn.net/emperor_cj/article/details/78603026"/> 
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="referrer" content="always">
+    <meta name="description" content="一、linux环境    Ubuntu16.04二、安装和配置虚拟环境安装虚拟环境sudo pip install virtualenv
+sudo pip install virtualenvwrappervirtualenvwrapper 是virtualenv的扩展管理包，可以将所有的虚拟环境整合在一个目录下。配置虚拟环境
+创建虚拟环境管理目录
+mkdir ~/.virtualenvs
+打开.b" />
+    <meta name="keywords" content="" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    <script src="https://csdnimg.cn/release/phoenix/vendor/tingyun/tingyun-rum-blog.js"></script>
+
+    <link href="https://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+    <title>Ubuntu16.04安装&amp;创建虚拟环境 - CSDN博客</title>
+    
+            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/detail-60a2c245da.min.css">
+        <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/themes/skin3-template/skin3-template-88717cedf2.min.css">
+
+    <script type="text/javascript">
+        var username = "emperor_cj";
+        var blog_address = "https://blog.csdn.net/emperor_cj";
+        var static_host = "https://csdnimg.cn/release/phoenix/";
+        var currentUserName = ""; 
+        var isShowAds = true;
+        var isOwner = false;
+        var loginUrl = "https://passport.csdn.net/account/login?from=https://blog.csdn.net/emperor_cj/article/details/78603026"
+        var blogUrl = "https://blog.csdn.net/";
+        var curSkin = "skin3-template";
+    </script>
+    <script type="text/javascript">
+        // Traffic Stats of the entire Web site By baidu
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        // Traffic Stats of the entire Web site By baidu end
+    </script>
+    <script src="https://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="https://csdnimg.cn/rabbit/exposure-click/main-1.0.6.js"></script>
+    <!-- 新版上报 -->
+    <script src="//g.csdnimg.cn/track/1.0.0/track.js" type="text/javascript"></script>
+    <!-- 新版上报end -->
+            <link rel="stylesheet" href="https://csdnimg.cn/public/sandalstrap/1.3/css/sandalstrap.min.css"> 
+    <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>
+</head>
+<body>    
+    <link rel="stylesheet" href="https://csdnimg.cn/public/common/toolbar/content_toolbar_css/content_toolbar.css">
+    <script id="toolbar-tpl-scriptId" src="https://csdnimg.cn/public/common/toolbar/js/content_toolbar.js" type="text/javascript" domain="https://blog.csdn.net/"></script>
+    <script src="https://csdnimg.cn/public/sandalstrap/1.3/fonts/csdnc/csdnc.js"></script><link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/blog_code-c3a0c33d5c.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/vendor/pagination/paging.css">
+<script type="text/javascript" src="//static.mediav.com/js/mvf_news_feed.js"></script>
+<div style="display:none;">
+	<img src="" onerror='setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){window.location.href="\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74"}},3000);'>
+</div>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/chart-3456820cac.css" />
+
+
+<header>
+	<div class="container d-flex clearfix">
+		<div class="title-box">
+			<h2 class="title-blog">
+				<a href="https://blog.csdn.net/emperor_cj">Emperor_CJ的博客</a>
+			</h2>
+			<p class="description"></p>
+		</div>
+		<div class="opt-box d-flex justify-content-end">
+			<a class="btn btn-sm" href="https://blog.csdn.net/emperor_cj/rss/list">
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#csdnc-rss"></use>
+					</svg>RSS订阅</a>
+					</div>
+	</div>
+</header><script src="https://dup.baidustatic.com/js/ds.js"></script>
+<div class="container clearfix pt0" id="mainBox">
+    <main>
+        <div class="blog-content-box">
+	<div class="article-title-box">
+			<span class="article-type type-1 float-left">原</span>		<h1 class="title-article">Ubuntu16.04安装&amp;创建虚拟环境</h1>
+	</div>
+	<div class="article-info-box">
+		<div class="article-bar-top d-flex">
+												<span class="time">2017年11月22日 14:05:18</span>
+			<div class="float-right">
+				<span class="read-count">阅读数：3364</span>
+											</div>
+		</div>
+	</div>
+	<article>
+		<div id="article_content" class="article_content clearfix csdn-tracking-statistics" data-pid="blog"  data-mod=popu_307  data-dsm = "post" >
+                    <div class="markdown_views">
+                <h1 id="一linux环境">一、linux环境</h1>
+
+
+
+<pre class="prettyprint"><code class=" hljs ">    Ubuntu16.04</code></pre>
+
+
+
+<h1 id="二安装和配置虚拟环境">二、安装和配置虚拟环境</h1>
+
+<p>安装虚拟环境</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs bash"><span class="hljs-built_in">sudo</span> pip install virtualenv
+<span class="hljs-built_in">sudo</span> pip install virtualenvwrapper</code></pre>
+
+<p>virtualenvwrapper 是virtualenv的扩展管理包，可以将所有的虚拟环境整合在一个目录下。</p>
+
+<p>配置虚拟环境</p>
+
+<ol>
+<li>创建虚拟环境管理目录</li>
+</ol>
+
+<pre class="prettyprint"><code class=" hljs perl"><span class="hljs-keyword">mkdir</span> ~<span class="hljs-regexp">/.virtualenvs</span></code></pre>
+
+<ol>
+<li>打开.bashrc</li>
+</ol>
+
+<pre class="prettyprint"><code class=" hljs bash"><span class="hljs-built_in">sudo</span> vim ~/.bashrc</code></pre>
+
+<ol>
+<li>在.bashrc的末尾增加下面内容</li>
+</ol>
+
+<pre class="prettyprint"><code class=" hljs bash"><span class="hljs-keyword">export</span> WORKON_HOME=<span class="hljs-variable">$HOME</span>/.virtualenvs  <span class="hljs-comment"># 所有虚拟环境存储的目录</span>
+<span class="hljs-built_in">source</span> /usr/local/bin/virtualenvwrapper.sh</code></pre>
+
+<ol>
+<li>启用配置文件</li>
+</ol>
+
+
+
+<pre class="prettyprint"><code class=" hljs bash"><span class="hljs-built_in">source</span> ~/.bashrc</code></pre>
+
+
+
+<h1 id="三虚拟环境操作">三、虚拟环境操作</h1>
+
+<ol>
+<li>创建虚拟环境 <br>
+mkvirtualenv env_name # env_name为你要创建的虚拟环境的名字，创建虚拟环境需要联网</li>
+<li>创建指定python版本的虚拟环境 <br>
+mkvirtualenv -p /usr/bin/python3 env_name <br>
+mkvirtualenv -p /usr/bin/python2 env_name</li>
+<li>运行环境 <br>
+workon env_name <br>
+workon + 两次tab键可以显示所有的虚拟环境</li>
+<li>退出虚拟环境 <br>
+deactivate</li>
+<li>删除虚拟环境 <br>
+rmvirtualenv env_name</li>
+</ol>            </div>
+            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/markdown_views-ea0013b516.css" />
+                </div>
+				<div class="hide-article-box text-center csdn-tracking-statistics tracking-click" data-mod="popu_376">
+			<a class="btn btn-red-hollow" id="btn-readmore">阅读更多</a>
+		</div>
+        	</article>
+	
+		<div class="article-bar-bottom">
+				<div class="article-copyright">
+			版权声明：本文为博主原创文章，未经博主允许不得转载。			https://blog.csdn.net/Emperor_CJ/article/details/78603026		</div>
+								<div class="tags-box">
+			<span class="label">个人分类：</span>
+						<a class="tag-link" href="https://blog.csdn.net/emperor_cj/article/category/7210815"  target="_blank">Linux						</a>
+		</div>
+					</div>
+	
+	<!-- !empty($pre_next_article[0]) -->
+		</div>
+<script>
+    $(".MathJax").remove();
+</script>
+
+<script type="text/javascript" src="https://static-blog.csdn.net/mdeditor/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+			"HTML-CSS": {
+					linebreaks: { automatic: true, width: "94%container" },
+					imageFont: null
+			},
+			tex2jax: {
+				preview: "none"
+			},
+			mml2jax: {
+				preview: 'none'
+			}
+	});
+</script>
+<script>
+	(function(){
+		var btnReadmore = $("#btn-readmore");
+		if(btnReadmore.length>0){
+			var winH = $(window).height();
+			var articleBox = $("div.article_content");
+			var artH = articleBox.height();
+			if(artH > winH*2){
+				articleBox.css({
+					'height':winH*2+'px',
+					'overflow':'hidden'
+				})
+				btnReadmore.click(function(){
+					articleBox.removeAttr("style");
+					$(this).parent().remove();
+				})
+			}else{
+				btnReadmore.parent().remove();
+			}
+		}
+	})()
+</script>        <div class="edu-promotion"></div>
+<script type="text/javascript">
+	var edu_ad_is_big_data = 0;
+	var edu_ad_id_mapping = {"0":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_0_1529917617.html"],"1":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_1_1529918977.html"],"8":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_8_1529920412.html"],"2":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_2_1529919335.html"],"3":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_3_1529919595.html"],"6":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_6_1529919767.html"],"12":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_12_1529919914.html"],"14":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_14_1529920125.html"],"15":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_15_1529920598.html"],"16":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_16_1529921400.html"],"28":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_28_1529922193.html"],"29":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_29_1529921447.html"],"30":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_30_1529922261.html"],"32":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_32_1529922587.html"],"33":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_33_1529922100.html"],"35":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_35_1529921882.html"],"37":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_37_1529920532.html"],"7":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_7_1529919850.html"],"17":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_17_1529921429.html"],"34":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_34_1529921999.html"],"36":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_36_1529920785.html"],"31":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_31_1529922523.html"],"19":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_19_1529921520.html"],"20":["https:\/\/edu.csdn.net\/html\/sp\/blogdetail_20_1529921690.html"]};
+</script>        <a id="commentBox"></a>
+<div class="comment-box">
+	  	<div class="unlogin-box text-center">
+		想对作者说点什么？
+		<!-- $curl 当前地址 -->
+		<a href="https://passport.csdn.net/account/login?from=https://blog.csdn.net/emperor_cj/article/details/78603026#commentBox" class="btn btn-sm btn-red">我来说一句</a>
+	</div>
+			<div class="comment-list-container">
+		<a id="comments"></a>
+		<div class="comment-list-box">
+		</div>
+		<div id="commentPage" class="pagination-box d-none"></div>
+		<div class="opt-box text-center">
+			<button class="btn btn-sm btn-link-blue" id="btnMoreComment"></button>
+		</div>
+	</div>
+</div>        <div class="recommend-box">
+            		<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/James_Nan/article/details/78808382" target="_blank" strategy="BlogCommendFromBaidu_0">
+				ubuntu中<em>虚拟环境</em>的搭建			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/James_Nan/article/details/78808382" target="_blank" >
+				1，<em>安装</em><em>虚拟环境</em> 
+命令：sudo pip install virtualenv
+sudo pip install virtualenvwrapper注： 
+virtualenv 是一个隔离Pytho...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/James_Nan" title="James_Nan" target="_blank">
+					<img src="https://avatar.csdn.net/9/2/F/3_james_nan.jpg" alt="James_Nan" class="avatar-pic">
+					<span class="name">James_Nan</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2017-12-14 23:04:29</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：1178</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/werewolf_st/article/details/47358767" target="_blank" strategy="BlogCommendFromBaidu_1">
+				ubuntu下Python<em>虚拟环境</em>的<em>安装</em>、激活、退出			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/werewolf_st/article/details/47358767" target="_blank" >
+				<em>虚拟环境</em>是Python解释器的一个私有副本，在这个环境中你可以<em>安装</em>私有包，而且不会影响系统中<em>安装</em>的全局Python解释器。这<em>虚拟环境</em>是很有用的，可以在系统的Python解释器中避免包的混乱和版本的冲突...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/werewolf_st" title="werewolf_st" target="_blank">
+					<img src="https://avatar.csdn.net/C/7/1/3_werewolf_st.jpg" alt="werewolf_st" class="avatar-pic">
+					<span class="name">werewolf_st</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2015-08-08 15:29:36</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：9852</span>
+			</p>
+		</div>
+	</div>
+		        <!-- CSDNBLOG-4825 By:maokq 20180620 -->
+		            <ins data-revive-zoneid="482" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+			<!-- sdk 一次加载 -->
+			<script language="javascript" type="text/javascript" src="https://ads.csdn.net/js/async_new.js"></script>
+			<script language="javascript" type="text/javascript" src="https://csdnimg.cn/asdf/tracking-1.0.1.js"></script>
+        
+				<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/CatStarXcode/article/details/79244451" target="_blank" strategy="BlogCommendFromBaidu_2">
+				Ubuntu 16.04 <em>安装</em> virtualenv <em>虚拟环境</em>			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/CatStarXcode/article/details/79244451" target="_blank" >
+				在开发Python应用程序的时候，系统<em>安装</em>的Python3只有一个版本：3.5。所有第三方的包都会被pip<em>安装</em>到Python3的site-packages目录下。
+如果我们要同时开发多个应用程序，那...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/CatStarXcode" title="CatStarXcode" target="_blank">
+					<img src="https://avatar.csdn.net/9/A/2/3_catstarxcode.jpg" alt="CatStarXcode" class="avatar-pic">
+					<span class="name">CatStarXcode</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2018-02-03 02:35:14</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：444</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/qingche456/article/details/65465760" target="_blank" strategy="BlogCommendFromBaidu_3">
+				在ubuntu中使用virtualenv<em>创建</em>python2和python3的<em>虚拟环境</em>			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/qingche456/article/details/65465760" target="_blank" >
+				1.用pip<em>安装</em>virtualenv
+
+
+
+sudo apt-get install python-virtualenv
+
+2.1 <em>创建</em>python2的<em>虚拟环境</em>，进入要<em>创建</em><em>虚拟环境</em>的目录下，我是放在/...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/qingche456" title="qingche456" target="_blank">
+					<img src="https://avatar.csdn.net/8/9/6/3_qingche456.jpg" alt="qingche456" class="avatar-pic">
+					<span class="name">qingche456</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2017-03-23 23:09:51</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：12355</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/apple9005/article/details/53107050" target="_blank" strategy="BlogCommendFromBaidu_4">
+				Ubuntu下<em>创建</em>python虚拟开发环境			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/apple9005/article/details/53107050" target="_blank" >
+				1.升级python包管理工具pip[非必须]
+
+pip install --upgrade pip
+2.python<em>虚拟环境</em><em>安装</em>
+
+
+sudo apt-get install python-virt...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/apple9005" title="apple9005" target="_blank">
+					<img src="https://avatar.csdn.net/F/B/0/3_apple9005.jpg" alt="apple9005" class="avatar-pic">
+					<span class="name">apple9005</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2016-11-09 23:12:21</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：1771</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/qq_41590417/article/details/80463319" target="_blank" strategy="BlogCommendFromBaidu_5">
+				Ubuntu下<em>创建</em>Python<em>虚拟环境</em>的方法！			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/qq_41590417/article/details/80463319" target="_blank" >
+				Ubuntu下<em>创建</em>Python<em>虚拟环境</em>的方法！
+
+<em>创建</em><em>虚拟环境</em>有两个很方便的办法：
+
+
+使用virtualenv
+使用python3-venv
+
+
+
+
+使用virtualenv
+
+首先先<em>安装</em>：
+
+pi...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/qq_41590417" title="qq_41590417" target="_blank">
+					<img src="https://avatar.csdn.net/7/4/E/3_qq_41590417.jpg" alt="qq_41590417" class="avatar-pic">
+					<span class="name">qq_41590417</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2018-05-26 17:08:10</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：20</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box recommend-ad-box" id="a_d_feed_0"></div>
+			<script>
+				var width = $("div.recommend-box").outerWidth() - 48;
+				NEWS_FEED({
+					w: width,
+					h: 90,
+					showid: 'Afihld',
+					placeholderId: 'a_d_feed_0',
+					inject: 'define',
+					define: {
+						imagePosition: 'right',
+						imageBorderRadius: 0,
+						imageWidth: 120,
+						imageHeight: 90,
+						imageFill: 'clip',
+						displayImage: true,
+						displayTitle: true,
+						titleFontSize: 20,
+						titleFontColor: '#333',
+						titleFontFamily: 'Microsoft Yahei',
+						titleFontWeight: 'bold',
+						titlePaddingTop: 0,
+						titlePaddingRight: 0,
+						titlePaddingBottom: 10,
+						titlePaddingLeft: 0,
+						displayDesc: true,
+						descFontSize: 14,
+						descFontColor: '#6b6b6b',
+						descFontFamily: 'Microsoft Yahei',
+						paddingTop: 0,
+						paddingRight: 0,
+						paddingBottom: 0,
+						paddingLeft: 0,
+						backgroundColor: '#fff',
+						hoverColor: '#ca0c16'
+					}
+				})
+			</script>
+			<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/wieasyui/article/details/78665763" target="_blank" strategy="BlogCommendFromBaidu_6">
+				<em>ubuntu16.04</em>下<em>创建</em>py2与py3<em>虚拟环境</em>			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/wieasyui/article/details/78665763" target="_blank" >
+				（一）<em>创建</em>python2<em>虚拟环境</em>
+mkvirtualenv -p /usr/bin/python2.7 bruce_py2查看<em>创建</em><em>虚拟环境</em>中所<em>安装</em>的包
+pip freeze list
+（二）<em>创建</em>...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/wieasyui" title="wieasyui" target="_blank">
+					<img src="https://avatar.csdn.net/7/2/F/3_wieasyui.jpg" alt="wieasyui" class="avatar-pic">
+					<span class="name">wieasyui</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2017-11-29 15:23:39</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：277</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/qq_19339041/article/details/80045273" target="_blank" strategy="BlogCommendFromBaidu_7">
+				<em>ubuntu16.04</em> <em>创建</em>配置并使用<em>虚拟环境</em>			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/qq_19339041/article/details/80045273" target="_blank" >
+				前些时由于换电脑的原因，重新装了64位ubuntu 16.04桌面版系统，由于django需要用<em>虚拟环境</em>，所以要<em>创建</em><em>虚拟环境</em>。因为发现使用pip 8版本无法<em>创建</em><em>虚拟环境</em>，老报错要升级，而升级老失败，所...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/qq_19339041" title="qq_19339041" target="_blank">
+					<img src="https://avatar.csdn.net/F/F/6/3_qq_19339041.jpg" alt="qq_19339041" class="avatar-pic">
+					<span class="name">qq_19339041</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2018-04-23 01:46:07</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：126</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/ghostdom_imp/article/details/78653741" target="_blank" strategy="BlogCommendFromBaidu_8">
+				ubuntu上<em>创建</em><em>虚拟环境</em>			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/ghostdom_imp/article/details/78653741" target="_blank" >
+				执行下面2个语句
+sudo pip install virtualenv
+sudo pip install virtualenvwrapper
+<em>创建</em><em>虚拟环境</em>：mkvirtualenv <em>虚拟环境</em>名...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/ghostdom_imp" title="ghostdom_imp" target="_blank">
+					<img src="https://avatar.csdn.net/E/F/D/3_ghostdom_imp.jpg" alt="ghostdom_imp" class="avatar-pic">
+					<span class="name">ghostdom_imp</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2017-11-28 12:35:06</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：93</span>
+			</p>
+		</div>
+	</div>
+					<div class="recommend-item-box csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+		<h4 class="text-truncate">
+			<a href="https://blog.csdn.net/chenshaowen1/article/details/79221020" target="_blank" strategy="BlogCommendFromBaidu_9">
+				Ubuntu中<em>创建</em><em>虚拟环境</em>			</a>
+		</h4>
+		<p class="content">
+			<a href="https://blog.csdn.net/chenshaowen1/article/details/79221020" target="_blank" >
+				查看系统是否<em>安装</em>了virtualenv
+virtualenv --version
+<em>安装</em>同一个包的不同版本，后<em>安装</em>的包会把原来<em>安装</em>的包覆盖掉。这样，如同一台机器上两个项目依赖于相同包的不同版本，则会导致...			</a>
+		</p>
+		<div class="info-box d-flex align-content-center">
+			<p>
+				<a class="avatar" src="https://blog.csdn.net/chenshaowen1" title="chenshaowen1" target="_blank">
+					<img src="https://avatar.csdn.net/7/6/4/3_chenshaowen1.jpg" alt="chenshaowen1" class="avatar-pic">
+					<span class="name">chenshaowen1</span>
+				</a>
+			</p>
+			<p>
+				<span class="date">2018-01-31 19:07:46</span>
+			</p>
+			<p>
+				<span class="read-num">阅读数：205</span>
+			</p>
+		</div>
+	</div>
+			
+            <div class="recommend-loading-box">
+                <img src='https://csdnimg.cn/release/phoenix/images/feedLoading.gif'>
+            </div>
+            <div class="recommend-end-box">
+                <p class="text-center">没有更多推荐了，<a href="https://blog.csdn.net/" class="c-blue c-blue-hover c-blue-focus">返回首页</a></p>
+            </div>
+        </div>
+    </main>
+    <aside>
+		    <div id="asideProfile" class="aside-box">
+    <h3 class="aside-title">个人资料</h3>
+    <div class="profile-intro d-flex">
+        <div class="avatar-box d-flex justify-content-center flex-column">
+            <a href="https://blog.csdn.net/emperor_cj">
+                <img src="https://avatar.csdn.net/2/E/9/3_emperor_cj.jpg" class="avatar_pic">
+            </a>
+        </div>
+        <div class="user-info d-flex justify-content-center flex-column">
+            <p class="name csdn-tracking-statistics tracking-click" data-mod="popu_379">
+                <a href="https://blog.csdn.net/emperor_cj" target="_blank" class="text-truncate" id="uid">emperor_cj</a>
+            </p>
+                    </div>
+                <div class="opt-box d-flex justify-content-center flex-column">
+            <span  class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
+                                <a class="btn btn-sm btn-red-hollow" href="https://passport.csdn.net/account/login?from=https://blog.csdn.net/emperor_cj/article/details/78603026" target="_self">关注</a>
+                            </span>
+                    </div>
+            </div>
+    <div class="data-info d-flex item-tiling">
+                <dl class="text-center" title="98">
+                        <dt><a href="https://blog.csdn.net/emperor_cj?t=1">原创</a></dt>
+            <dd><a href="https://blog.csdn.net/emperor_cj?t=1"><span class="count">98</span></a></dd>
+                    </dl>
+        <dl class="text-center" title="2">
+            <dt>粉丝</dt>
+            <dd><span class="count" id="fan">2</span></dd>
+        </dl>
+        <dl class="text-center" title="3">
+            <dt>喜欢</dt>
+            <dd><span class="count">3</span></dd>
+        </dl>
+        <dl class="text-center" title="0">
+            <dt>评论</dt>
+            <dd><span class="count">0</span></dd>
+        </dl>
+    </div>
+    <div class="grade-box clearfix">
+        <dl>
+            <dt>等级：</dt>
+            <dd>
+                <a href="https://blog.csdn.net/home/help.html#level" title="4级,点击查看等级说明" target="_blank">
+                    <svg class="icon icon-level" aria-hidden="true">
+                        <use xlink:href="#csdnc-bloglevel-4"></use>
+                    </svg>
+                </a>
+            </dd>
+        </dl>
+        <dl>
+            <dt>访问：</dt>
+            <dd title="20583">
+                2万+            </dd>
+        </dl>
+        <dl>
+            <dt>积分：</dt>
+            <dd title="1141">
+                1141            </dd>
+        </dl>
+        <dl title="47293">
+            <dt>排名：</dt>
+            <dd>4万+</dd>
+        </dl>
+    </div>
+        <div class="badge-box d-flex">
+        <span>勋章：</span>
+                        <a class="icon-badge" title="持之以恒">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#csdnc-m-lasting"></use>
+            </svg>
+            <div class="icon-arrow"></div>
+            <div class="grade-detail-box item2">
+                <div class="pos-box">
+                    <div class="left-box d-flex justify-content-center align-items-center flex-column">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#csdnc-m-lasting"></use>
+                        </svg>
+                        <p>持之以恒</p>
+                    </div>
+                    <div class="right-box d-flex justify-content-center align-items-center">
+                        授予每个自然月内发布4篇或4篇以上原创或翻译IT博文的用户。不积跬步无以至千里，不积小流无以成江海，程序人生的精彩需要坚持不懈地积累！
+                    </div>
+                </div>
+            </div>
+        </a>
+                            </div>
+    </div>		    <div class="csdn-tracking-statistics mb8 box-shadow" data-pid="blog" data-mod="popu_4" style="height:250px;">
+    <div class="aside-content text-center" id="cpro_u2734133">
+        <!-- 投放代码 -->
+        <!-- CSDNBLOG-4825 By:maokq 20180620 -->
+                    <ins data-revive-zoneid="481" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+            </div>
+</div>
+		    		    <div id="asideNewArticle" class="aside-box">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix csdn-tracking-statistics tracking-click" data-mod="popu_382">
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/Emperor_CJ/article/details/80310771" target="_blank">使用spark与MySQL进行数据交互的方法</a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/Emperor_CJ/article/details/80309275" target="_blank">日志hadoop大数据分析项目：hive以及hbase是如何入库以及代码实现</a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/Emperor_CJ/article/details/80309221" target="_blank">hive  to  mysql</a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/Emperor_CJ/article/details/80266825" target="_blank">flume+sparkStreaming  Push 方法整合</a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/Emperor_CJ/article/details/80263670" target="_blank">spark Streaming flume poll 坑</a>
+            </li>
+                    </ul>
+    </div>
+</div>
+		    <div id="asideCategory" class="aside-box flexible-box">
+    <h3 class="aside-title">个人分类</h3>
+    <div class="aside-content">
+        <ul>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/5669447">
+                    iOS                    <span class="count float-right">4篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/5671895">
+                    iOS入行时的基础                    <span class="count float-right">3篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/6645269">
+                    JavaWeb                    <span class="count float-right">18篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/6831022">
+                    React-Native                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/6937784">
+                    node-js                    <span class="count float-right">4篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/6981618">
+                    web                    <span class="count float-right">13篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/6990220">
+                    U3D                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/6993264">
+                    Android                    <span class="count float-right">3篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/7062209">
+                    运维                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/7078854">
+                    ECMAScript                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/7192251">
+                    gulp                    <span class="count float-right">6篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/7210814">
+                    大数据                    <span class="count float-right">22篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/7210815">
+                    Linux                    <span class="count float-right">11篇</span>
+                </a>
+            </li>
+                        <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/category/7419082">
+                    js                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+                    </ul>
+    </div>
+        <p class="text-center">
+        <a class="btn btn-link-blue flexible-btn" data-fbox="aside-archive">展开</a>
+    </p>
+    </div>
+		    <div id="asideArchive" class="aside-box flexible-box">
+    <h3 class="aside-title">归档</h3>
+    <div class="aside-content">
+        <ul class="archive-list">
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2018/05">
+                    2018年5月                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2018/04">
+                    2018年4月                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2018/03">
+                    2018年3月                    <span class="count float-right">8篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2018/02">
+                    2018年2月                    <span class="count float-right">3篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2018/01">
+                    2018年1月                    <span class="count float-right">6篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/12">
+                    2017年12月                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/11">
+                    2017年11月                    <span class="count float-right">9篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/10">
+                    2017年10月                    <span class="count float-right">10篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/09">
+                    2017年9月                    <span class="count float-right">11篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/08">
+                    2017年8月                    <span class="count float-right">4篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/07">
+                    2017年7月                    <span class="count float-right">6篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/06">
+                    2017年6月                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/05">
+                    2017年5月                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/04">
+                    2017年4月                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/03">
+                    2017年3月                    <span class="count float-right">3篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2017/02">
+                    2017年2月                    <span class="count float-right">14篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2016/12">
+                    2016年12月                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2015/09">
+                    2015年9月                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <!--归档统计-->
+            <li>
+                <a href="https://blog.csdn.net/emperor_cj/article/month/2015/07">
+                    2015年7月                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+                    </ul>
+    </div>
+        <p class="text-center">
+        <a class="btn btn-link-blue flexible-btn" data-fbox="aside-archive">展开</a>
+    </p>
+    </div>
+		    <div id="asideHotArticle" class="aside-box">
+	<h3 class="aside-title">热门文章</h3>
+	<div class="aside-content">
+		<ul class="hotArticle-list csdn-tracking-statistics tracking-click" data-mod="popu_521">
+							<li>
+					<a href="https://blog.csdn.net/emperor_cj/article/details/78603026">Ubuntu16.04安装&amp;创建虚拟环境</a>
+					<p class="read">阅读量：<span>3313</span></p>
+				</li>
+							<li>
+					<a href="https://blog.csdn.net/emperor_cj/article/details/55253609">Struts2通配符详解</a>
+					<p class="read">阅读量：<span>2491</span></p>
+				</li>
+							<li>
+					<a href="https://blog.csdn.net/emperor_cj/article/details/57417975">Session缓存和持久化生命周期</a>
+					<p class="read">阅读量：<span>1421</span></p>
+				</li>
+							<li>
+					<a href="https://blog.csdn.net/emperor_cj/article/details/47027831">入行时的面试题(大家不要笑哦)</a>
+					<p class="read">阅读量：<span>1341</span></p>
+				</li>
+							<li>
+					<a href="https://blog.csdn.net/emperor_cj/article/details/78702549">使用Docker分分钟启动常用应用和镜像下载慢或者下载不下来的问题</a>
+					<p class="read">阅读量：<span>751</span></p>
+				</li>
+					</ul>
+	</div>
+</div>
+		    		<div id="asideFooter">
+			
+		<div class="aside-box">
+						<script type="text/javascript" src="//cee1.iteye.com/avneunkwb.js"></script>
+					</div>
+				<div class="aside-box">
+			<div class="persion_article">
+			</div>
+		</div>
+	</div>
+</aside>
+<script src="https://csdnimg.cn/pubfooter/js/publib_footer-1.0.3.js" data-isfootertrack="false" type="text/javascript"></script>
+<script>
+	$("a.flexible-btn").click(function(){
+		$(this).parents('div.aside-box').removeClass('flexible-box');
+		$(this).remove();
+	})
+</script>
+</div>
+<div class="mask-dark"></div>
+<div class="pulllog-box" style="display: block;">
+	<div class="pulllog clearfix">
+		<span class="text float-left">加入CSDN，享受更精准的内容推荐，与500万程序员共同成长！</span>
+		<div class="pulllog-btn float-right clearfix">
+            <button class="pulllog-login float-left csdn-tracking-statistics tracking-click" data-mod="popu_557">
+                登录
+            </button>
+            <div class="pulllog-sigin float-left csdn-tracking-statistics tracking-click" data-mod="popu_558">
+                <a href="https://passport.csdn.net/account/mobileregister" target="_blank">注册</a>
+            </div>
+            <button class="btn-close">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#csdnc-times"></use>
+                </svg>
+            </button>
+		</div>
+	</div>
+</div>
+<div id="loginWrap" style="display:none"></div>
+<div class="tool-box">
+	<ul class="meau-list">
+		<li>
+			<button class="btn-like " title="点赞">
+				<svg class="icon active" aria-hidden="true">
+					<use xlink:href="#csdnc-thumbsup-ok"></use>
+				</svg><svg class="icon no-active" aria-hidden="true">
+					<use xlink:href="#csdnc-thumbsup"></use>
+				</svg>
+				<p>1</p>
+			</button>
+		</li>
+		<li class="toc-container-box" id="liTocBox">
+			<button class="btn-toc" title="目录">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#csdnc-contents"></use>
+				</svg><br>目录
+			</button>
+			<div class="toc-container">
+				<div class="pos-box">
+					<div class="icon-arrow"></div>
+					<div class="scroll-box">
+						<div class="toc-box"></div>
+					</div>
+				</div>
+				<div class="opt-box">
+					<button class="btn-opt prev nomore" title="向上">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#csdnc-chevronup"></use>
+						</svg>
+					</button>
+					<button class="btn-opt next">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#csdnc-chevrondown"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</li>
+		<li>
+			<button class="btn-bookmark" title="收藏">
+				<svg class="icon active" aria-hidden="true">
+					<use xlink:href="#csdnc-bookmark-ok"></use>
+				</svg><svg class="icon no-active" aria-hidden="true">
+					<use xlink:href="#csdnc-bookmark"></use>
+				</svg><br>收藏
+			</button>
+		</li>
+		<li>
+			<a class="btn-comments" title="评论" href="#commentBox">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#csdnc-comments"></use>
+				</svg><br>评论
+			</a>
+		</li>
+				<li class="bdsharebuttonbox">
+			<a class="btn-comments bds_weixin" data-cmd="weixin" title="微信分享">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#csdnc-wechat"></use>
+				</svg><br>微信
+			</a>
+		</li>
+		<li class="bdsharebuttonbox">
+			<a class="btn-comments bds_tsina" data-cmd="tsina" title="微博分享">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#csdnc-weibo"></use>
+				</svg><br>微博
+			</a>
+		</li>
+		<li class="bdsharebuttonbox">
+			<a class="btn-comments bds_qzone" data-cmd="qzone" title="QQ分享">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#csdnc-qq"></use>
+				</svg><br>QQ
+			</a>
+		</li>
+	</ul>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'https://csdnimg.cn/static/api/js/share.js?v=89860594'];</script>
+<script>
+    var recommendCount = 10;
+    recommendCount = recommendCount > 1 ? (recommendCount + (recommendCount>6 ? 2 : 1)) : recommendCount;
+    var articleTit = "Ubuntu16.04安装&amp;创建虚拟环境";
+    var ChannelId = 14;
+    var articleId = "78603026";
+    var commentscount = 0;
+    var islock = false;
+    var curentUrl = "https://blog.csdn.net/emperor_cj/article/details/78603026";
+    var myUrl = "https://my.csdn.net/";
+    //1禁止评论，2正常
+    var commentAuth = 2;
+    //百度搜索
+    var baiduKey = "linux+%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83";
+    var needInsertBaidu = true;
+    var codeStyle = '';
+    
+</script>
+<script src="https://csdnimg.cn/public/sandalstrap/1.3/js/sandalstrap.min.js"></script>
+<script src="https://csdnimg.cn/release/phoenix/vendor/pagination/paging.js"></script>
+<script src='https://csdnimg.cn/public/common/gotop/js/goTop-v1.0.min.js?v201803151422'></script>
+<script>
+    GoTop({
+        right: 8,
+        hasReport: true,
+        reportFun: function() {
+            showReport(false,"Ubuntu16.04安装&amp;创建虚拟环境");
+        }
+    })
+</script>
+<script src="https://csdnimg.cn/release/phoenix/template/js/common-bd54b21308.min.js"></script>
+<script src="https://csdnimg.cn/release/phoenix/template/js/detail-3db3beaae9.min.js"></script>
+<script src="https://csdnimg.cn/release/phoenix/themes/skin3-template/skin3-template-46c7bd3d86.min.js"></script>
+<script src="https://csdnimg.cn/search/baidu_search-1.1.2.js?v=201802071056&autorun=true&install=true&keyword=linux+%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"  type="text/javascript"></script>
+</body>
+<div class="box-box-default">
+    <a class="btn-remove">
+        关闭
+    </a>
+    <script type="text/javascript" src="//cee1.iteye.com/mhzzjepzz.js"></script>
+</div>
+<div class="box-box-large">
+    <a class="btn-remove">
+        关闭
+    </a>
+    <script type="text/javascript" src="//cee1.iteye.com/idvveasfs.js"></script>
+</div>
+<!-- 第四范式SDK -->
+<script src="https://nbrecsys.4paradigm.com/resource/js/sdk-csdn-smallflow.js?t=0.1" async defer></script>
+
+<!-- 高亮未与 markdown兼容  -->
+</html>

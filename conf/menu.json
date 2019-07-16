@@ -1,0 +1,88 @@
+{
+     "button":[
+      {
+          "name":"精选推荐",
+          "sub_button":[
+            {
+              "type": "view",
+              "name": "新品速递",
+              "url": "http://mp.weixin.qq.com/s?__biz=MzU4ODUwNDU3Mw==&mid=2247485441&idx=1&sn=f93bb563aea63b37acfb7b78121aba85&chksm=fdda8493caad0d85ca5d0070cf0be63cb277c4ddc14954f28230230c683495e5cfadf0b691b3&scene=18#wechat_redirect"
+            },
+            {
+              "type": "view",
+              "name": "产品评测",
+              "url": "http://mp.weixin.qq.com/mp/homepage?__biz=MzU4ODUwNDU3Mw==&hid=5&sn=b310b2c8e6231d2e6722565b70e1289d&scene=18#wechat_redirect"
+            },
+            {
+              "type": "view",
+              "name": "官方商城",
+              "url": "https://shop.m.jd.com/?shopId=1000100762"
+            },
+            {
+              "type": "view",
+              "name": "用户说",
+              "url": "http://mp.weixin.qq.com/s?__biz=MzU4ODUwNDU3Mw==&mid=2247485381&idx=1&sn=dde73dc2dab8c529c0d3ebf762f45900&chksm=fdda8b57caad024144ce28d1dafe2e186e69fd7af9b5bc759fa5a9353e860dabce57cef004b9&scene=18#wechat_redirect"
+            },
+            {
+              "type": "view",
+              "name": "精品书单",
+              "url": "http://mp.weixin.qq.com/mp/homepage?__biz=MzU4ODUwNDU3Mw==&hid=3&sn=3ad33bfb9399e37d89858a02d7969e99&scene=18#wechat_redirect"
+            }
+      ]
+      },
+
+       {
+           "name":"产品服务",
+           "sub_button":[
+            {
+               "type":"view",
+               "name":"玩机技巧",
+               "url":"http://mp.weixin.qq.com/mp/homepage?__biz=MzU4ODUwNDU3Mw==&hid=4&sn=f711adbdfdfa08cac212af4fa4d68ea3&scene=18#wechat_redirect"
+            },
+			{
+               "type":"view",
+               "name":"售后服务",
+                "url":"http://mp.weixin.qq.com/s?__biz=MzU4ODUwNDU3Mw==&mid=100001862&idx=1&sn=274196772a1fc31ad12693ea3f1ee8d1&chksm=7dda84d44aad0dc2c601675635cb11e3d3fb16c53aeb2bdde86e68cf47938576f43c1b39ad2c&scene=18#wechat_redirect"
+            },
+             {
+               "type":"view",
+               "name":"常见问题",
+               "url":"http://mp.weixin.qq.com/s?__biz=MzU4ODUwNDU3Mw==&mid=100000064&idx=1&sn=1feea115c5810980b27a0b160f5c06ab&chksm=7dda8dd24aad04c418ad2792f81777f8064b262233cd67ac914ca49fe606be695d17827310f7&scene=18#wechat_redirect"
+            },
+             {
+                "type":"click",
+               "name":"我的客服",
+                "key":"kugeshinidie"
+            },
+		    {
+                "type":"view",
+                "name":"Send to Obook",
+                "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1fc6ff9824c795d3&redirect_uri=http%3a%2f%2fqqq.ngrok.xiaomiqiu.cn%2fyanzheng&response_type=code&scope=snsapi_base&state=23#wechat_redirect"
+
+		    }
+           ]
+       },
+
+       {
+           "name":"用户福利",
+           "sub_button":[
+            {
+               "type":"view",
+               "name":"有奖互动",
+               "url":"http://mp.weixin.qq.com/s?__biz=MzU4ODUwNDU3Mw==&mid=2247485505&idx=1&sn=5bf2c905f288846088cd7e127cb0a64b&chksm=fdda84d3caad0dc596b95ded216d6676fa03f18caecb5de83ad5589196ad5f546c349d38a60a&scene=18#wechat_redirect"
+            },
+            {
+               "type":"view",
+               "name":"每周送书",
+               "url":"http://mp.weixin.qq.com/s?__biz=MzU4ODUwNDU3Mw==&mid=100001870&idx=1&sn=4637a46f2447c6ca3541e389f96626ba&chksm=7dda84dc4aad0dca30171031376d0ad8fb0b59b69f79b858355cefd9e68730b54b4715dc8c6c&scene=18#wechat_redirect"
+            },
+             {
+                "type":"click",
+                "name":"我问你答",
+                "key":"wwnd"
+              }
+           ]
+	    }
+
+	]
+}

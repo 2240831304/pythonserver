@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <meta http-equiv=content-type content="text/html; "charset="UTF-8">
+    <title>文件上传</title>
+    <style type="text/css">
+         a {
+                text-decoration: none;
+            }
+        #blist a {
+            display:block;
+            height: 30px;
+            width: 100%;
+            margin: 10px 0;
+            text-decoration: none;
+            {#text-align: center;#}
+            float: left;
+        }
+	 #blist a:hover{
+         color: red;
+     }
+     #fileId{
+             height: 25px;
+             width: 250px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+     }
+     #sub{
+             height: 25px;
+             width: 70px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+
+     }
+    #but{
+             height: 25px;
+             width: 70px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+             margin: 20px 0;
+    }
+        #back{
+             height: 25px;
+             width: 83px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+             margin: 10px 0;
+
+        }
+	.step-links{
+            height: 30px;
+            width: 100%;
+            margin: 10px 0;
+            text-align: center;
+            float: left;
+        }
+        .step-links a{
+            text-decoration: none;
+        }
+	.step-links a:hover{
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+        <a>用户名:{{ value }}</a><br>
+        <a hidden="hidden" id="hidden">{{ FromUserName }}</a>
+        <p>我的书库</p>
+        <div id="blist">
+        {% for l in list %}
+{#            <a href="http://qqq.ngrok.xiaomiqiu.cn/templates/test10.html?bookid={{ l.bookid }}">{{ l.booksname }}</a><br>#}
+            <a href="/templates/test10.html?bookid={{ l.bookid }}&FromUserName={{ FromUserName }}">{{ l.booksname }}</a><br>
+
+        {% endfor %}
+        </div>
+	<div id="pages" class="text-center" >
+        <nav>
+            <ul class="pagination">
+                <li class="step-links">
+                <a class='active' href="/templates/post.html?bookid={{ l.bookid }}&FromUserName={{ FromUserName }}&page=1">首页</a>
+                {% if list.has_previous %}
+                    <a class='active' href="/templates/post.html?bookid={{ l.bookid }}&FromUserName={{ FromUserName }}&page={{ list.previous_page_number }}">上一页</a>
+                {% endif %}
+
+                <span id="fenye" class="current">
+                    Page {{ list.number }} of {{ list.paginator.num_pages }}</span>
+
+                {% if list.has_next %}
+                    <a class='active' href="/templates/post.html?bookid={{ l.bookid }}&FromUserName={{ FromUserName }}&page={{ list.next_page_number }}">下一页</a>
+                {% endif %}
+                    <a class='active' href="/templates/post.html?bookid={{ l.bookid }}&FromUserName={{ FromUserName }}&page={{ list.paginator.num_pages }}">末页</a>
+
+                </li></ul></nav></div>
+        <form  id="myform" action="http://wechatpushbook.obook.com.cn" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <input hidden="hidden" type="text" name="OSSAccessKeyId" value="LTAI58KY8Zi5cFDF">
+            <input hidden="hidden" type="text" name="policy" value="eyJleHBpcmF0aW9uIjoiMjExNS0wMS0yN1QxMDo1NjoxOVoiLCJjb25kaXRpb25zIjpbWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsIDAsIDEwNDg1NzYwMDBdXX0=">
+            <input hidden="hidden" type="text" name="Signature" value="XBMM+dObjy1epyD5jUKyNNiiWCw=">
+            <input hidden="hidden" type="text" name="key" id="filename" value="{{ FromUserName }}_${filename}">
+            <input hidden="hidden" type="text" name="success_action_redirect" value="http://wechattest.obook.com.cn/templates/post.html?FromUserName={{ FromUserName }}">
+            <input hidden="hidden"  type="text" name="success_action_status" value="201">
+            <input name="file" type="file" id="fileId"><br><br><br>
+{#            <button  id="btnId" type="submit">上传</button>#}
+            <input id="sub" type="submit" value="提交" onclick="uploadFile()">
+            <br><br><br>
+            <a>友情提示：目前仅支持后缀名为epub,text,pdf等的文件上传.<br>
+                待弹窗'完成上传准备'出现后再点击提交按钮，否则会无法正常获取文件参数．
+            </a>
+{#            上传文件1: <input type="file" name="file1" id="file"><br />#}
+            <div class='container'>
+             <span id="progress"></span>
+         </div>
+         </form>
+         <button id="but" onclick="fileSelected()">文件信息</button>
+{#        <button onclick="uploadFile()">确认上传</button>#}
+        <div id="info">
+            <div id="fileName"></div>
+            <div id="fileSize"></div>
+            <div id="fileType"></div>
+        </div>
+        <div id="result"></div>
+            <input id="back" type="button" value="返回上一页" onclick="javascript:history.back(-1);">
+            <a id="box" hidden="hidden"></a>
+
+    <script src="/static/js/jquery-1.12.4.min.js"></script>
+    <script src="/static/js/spark-md5.min.js"></script>
+    <script type="text/javascript" >
+     {#$(document).ready(function () {#}
+          document.getElementById("fileId").addEventListener("change", function() {
+              var objFile = document.getElementById("fileId");
+
+                 var filename = objFile.files[0].name;
+                 alert(filename)
+                 var NAME = filename.substring(filename.lastIndexOf('.')+1).toLowerCase()
+                 if (NAME !='txt' && NAME !='epub' && NAME != 'pdf') {
+                    alert('目前仅支持后缀名为epub,text,pdf等的文件上传')
+                     location.reload()
+                     return
+                 }
+              {#alert('hahaha')#}
+            //声明必要的变量
+              {#alert('进入处理js')#}
+            var fileReader = new FileReader(), box = document.getElementById('box');
+            //文件分割方法（注意兼容性）
+            blobSlice = File.prototype.mozSlice || File.prototype.webkitSlice || File.prototype.slice,
+            file = document.getElementById("fileId").files[0],
+
+            //文件每块分割2M，计算分割详情
+            chunkSize = 2097152,
+            chunks = Math.ceil(file.size / chunkSize),
+            currentChunk = 0,
+
+            //创建md5对象（基于SparkMD5）
+            spark = new SparkMD5();
+
+
+            //每块文件读取完毕之后的处理
+            fileReader.onload = function(e) {
+                console.log("读取文件", currentChunk + 1, "/", chunks);
+                //每块交由sparkMD5进行计算
+                spark.appendBinary(e.target.result);
+                currentChunk++;
+
+                //如果文件处理完成计算MD5，如果还有分片继续处理
+                if (currentChunk < chunks) {
+                    loadNext();
+                } else {
+                    console.log("finished loading");
+                    var md5 = spark.end()
+                    alert('完成上传准备')
+                    box.innerText = md5;
+                    document.getElementById("bookname").value ='{{ FromUserName }}'+'_'+file.name;
+                    {#alert(document.getElementById("bookname").value)#}
+                    console.info("计算的Hash", spark.end());
+                    {#alert('文件md5:'+spark.end())#}
+                    {#md5 = spark.end()#}
+                    return spark.end()
+                }
+            };
+
+             //处理单片文件的上传
+             function loadNext() {
+                 var start = currentChunk * chunkSize, end = start + chunkSize >= file.size ? file.size : start + chunkSize;
+
+                 fileReader.readAsBinaryString(blobSlice.call(file, start, end));
+             }
+
+              loadNext();
+        });
+;
+
+        function test1() {
+
+            var objFile = document.getElementById("fileId");
+
+            var filename = objFile.files[0].name;
+            alert(filename)
+
+                {#alert('文件名是' + filename)#}
+                var FromUserName = $('#hidden').text();
+                var md5 = document.getElementById('box').innerText;
+                var data = {'md5': md5, 'filename': filename, 'FromUserName': FromUserName};
+
+                $.ajax({
+                    'url': '/deal',
+                    'type': 'post',
+                    {#'dataType': 'json',#}
+                    {#'async': 'false',#}
+                    'data': data
+                }).success(function (data) {
+                    if (data.res == 1) {
+                        {#alert('文件上传成功');#}
+                        {#location.reload(true);#}
+                        {#window.location.replace("/templates/post.html?FromUserName={{ FromUserName }}")#}
+                        {#document.getElementById('myform').submit();#}
+                    }
+                })
+            }
+
+            function fileSelected() {
+                var file = document.getElementById('fileId').files[0];
+                if (file) {
+                    var fileSize = 0;
+                    if (file.size > 1024 * 1024)
+                        fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+                    else
+                        fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+                    document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+                    document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+                    document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+                }
+            }
+
+            function uploadFile() {
+                var filename = document.getElementById('fileId').value
+                {#alert(filename)#}
+                if (filename == '') {
+                    alert('请选择文件上传')
+                    return;
+                }
+                var fd = new FormData();
+                fd.append("file", document.getElementById('fileId').files[0]);
+                var xhr = new XMLHttpRequest();
+                xhr.upload.addEventListener("progress", uploadProgress, false);
+                xhr.addEventListener("load", uploadComplete, false);
+                xhr.addEventListener("error", uploadFailed, false);
+                {#xhr.addEventListener("abort", uploadCanceled, false);#}
+                xhr.open("POST", "http://wechat-kuku.oss-cn-beijing.aliyuncs.com");//修改成自己的接口
+                xhr.send(fd);
+
+                test1()
+            }
+
+            function uploadProgress(evt) {
+                if (evt.lengthComputable) {
+                    var percent = Math.round(evt.loaded * 100 / evt.total);
+
+                    document.getElementById('progress').innerHTML = percent.toFixed(2) + '%';
+                    document.getElementById('progress').style.width = percent.toFixed(2) + '%';
+                }
+                else {
+                    document.getElementById('progress').innerHTML = 'unable to compute';
+                }
+            }
+
+            function uploadComplete(evt) {
+                /* 服务器端返回响应时候触发event事件*/
+                {#document.getElementById('result').innerHTML = evt.target.responseText;#}
+            }
+
+            function uploadFailed(evt) {
+                alert("上传失败,请重新上传.");
+            }
+
+            function uploadCanceled(evt) {
+                {#alert("The upload has been canceled by the user or the browser dropped the connection.");#}
+            }
+
+</script>
+
+</body>
+</html>

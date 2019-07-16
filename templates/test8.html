@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <meta charset="UTF-8">
+    <title>Send to Obook</title>
+    <style>
+        #res{
+             height: 25px;
+             width: 100%;
+             text-align: left;
+             border-style: none;
+             margin: 10px 0;
+         }
+         #back{
+             height: 25px;
+             width: 83px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+        }
+    </style>
+</head>
+<body>
+     <div id="res">{{ data }}</div>
+     <br>
+     <input id="back" type="button" value="返回上一页" onclick="javascript:history.back(-1);">
+</body>
+</html>

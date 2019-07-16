@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    <meta charset="UTF-8">
+    <title>我已绑定的终端序列列表</title>
+    <style>
+         a {
+            text-decoration: none;
+        }
+        #bookid{
+             height: 25px;
+             width: 100%;
+             text-align: left;
+             border-style: none;
+             margin: 10px 0;
+         }
+         #bookname{
+             height: 25px;
+             width: 100%;
+             text-align: left;
+             border-style: none;
+             margin: 10px 0;
+         }
+         #zd{
+             height: 25px;
+             width: 100%;
+             text-align: left;
+             border-style: none;
+             margin: 10px 0;
+         }
+         #zdlist a{
+             display: block;
+             height: 15px;
+             width: 100%;
+             text-align: left;
+             border-style: none;
+             {#margin: 1px 0;#}
+         }
+	 #zdlist a:hover{
+             color: red;
+         }
+         #back{
+             height: 25px;
+             width: 83px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+        }
+    </style>
+</head>
+<body>
+        <div id="bookid">书籍编号:{{ obj.bookid }}</div>
+        <div id="bookname">书籍名称:{{ obj.booksname }}</div>
+        <div id="zd">您可以选择的要推送到的目标终端:</div>
+        <div id="zdlist">
+        {% for l in list %}
+            <a href="/tuishu?bookid={{ obj.bookid }}&serial={{ l.serial }}">{{ l.serial }}</a>
+            <br>
+        {% endfor %}
+        </div>
+         <input id="back" type="button" value="返回上一页" onclick="javascript:history.back(-1);">
+</body>
+</html>

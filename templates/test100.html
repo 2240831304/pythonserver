@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+    <meta charset="UTF-8">
+    <title>Send to Obook</title>
+    <style type="text/css">
+        #file{
+            border:1px solid #000
+        }
+         a {
+            text-decoration: none;
+        }
+         div a{
+            width:100%;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+            {#color: red;#}
+            border-style: solid;
+            border-width: 0;
+        }
+        #upload{
+            width:100%;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+            {#color: red;#}
+            border-style: solid;
+            border-width: 0;
+        }
+        {##back{#}
+        {#    width:100%;#}
+        {#    margin: 0 auto;#}
+        {#    display: block;#}
+        {#    text-align: center;#}
+            {#color: red;#}
+        {#    border-style: solid;#}
+        {#    border-width: 0;#}
+        {#}#}
+/* css注释：只对table标签设置红色边框样式 */
+    </style>
+</head>
+<body>
+        <div>
+        <a>用户名:{{ value }}</a><br>
+        <p>我的书库</p>
+        {% for l in list %}
+            <a href="/templates/test10.html?bookid={{ l.bookid }}&FromUserName={{ FromUserName }}">{{ l.booksname }}</a><br>
+
+        {% endfor %}
+        </div>
+        <form  method="post" action="/upload?FromUserName={{ FromUserName }}" enctype="multipart/form-data">
+             {% csrf_token %}
+{#        <input id="user" type="text" name="user" />#}
+            <h1><input id='file' type="file" name="files" /><br><br><br></h1>
+            <h1><input id="upload" type="submit" value="提交" /></h1>
+        </form>
+        <input id="back" type="button" value="返回上一页" onclick="javascript:history.back(-1);">
+        {{ data }}
+</body>
+</html>
+
+
+
+

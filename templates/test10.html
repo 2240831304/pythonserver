@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{#    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">#}
+{#    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">#}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+
+    <meta charset="UTF-8">
+    <title>微信推书</title>
+    <style>
+         a{
+		text-decoration:none;
+        }
+        #bookid{
+             height: 25px;
+             width: 100%;
+             text-align: left;
+             border-style: none;
+             margin: 10px 0;
+         }
+         #bookname{
+             height: 25px;
+             width: 100%;
+             text-align: left;
+             border-style: none;
+             margin: 10px 0;
+         }
+         #del{
+             height: 25px;
+             width: 83px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+             margin: 10px 0;
+         }
+        #back{
+             height: 25px;
+             width: 83px;
+             background:rgba(0,0,0,.2);
+             border:1px solid rgba(0,0,0,.2);
+             border-radius: 0.3em;
+             margin: 10px 0;
+        }
+	#zd:hover{
+            color: red;
+        }
+    </style>
+    <script src="/static/js/jquery-1.12.4.min.js"></script>
+      <script type="text/javascript">
+      $(document).ready(function () {
+         $('#del').click(function () {
+             var bookid = $('#bookid').text()
+             var openid = $('#hidden').text()
+             var parm = {'bookid':bookid,'openid':openid}
+             $.ajax({
+                 'url':'/delete',
+                 'type':'post',
+                 'data':parm
+             }).success(function (data) {
+                 if (data.res ==1){
+                     document.getElementById("con").style.display="none";
+                     var rollback = document.getElementById('rollback')
+                     rollback.innerHTML = '删除成功'
+                     {#alert('删除成功')#}
+                 }
+             })
+         })
+      })
+      </script>
+</head>
+<body>
+
+    <div id="con">
+        <a hidden="hidden" id="hidden">{{ openid }}</a>
+        图书编号：<a id="bookid">{{ obj.bookid }}</a>
+        <div id="bookname">图书名称：{{ obj.booksname }}</div>
+    {#    <a href="http://qqq.ngrok.xiaomiqiu.cn/delete?bookid={{ obj.bookid }}&openid={{ openid }}">删除</a>#}
+        <button type="button" id="del">删除</button>
+
+        <br>
+    {#    <a href="http://qqq.ngrok.xiaomiqiu.cn/zhongduan?bookid={{ obj.bookid }}&openid={{ openid }}">推送终端</a>#}
+         <a id="zd" href="/zhongduan?bookid={{ obj.bookid }}&openid={{ openid }}">推送终端</a>
+
+        <br>
+    </div>
+    <div id="rollback"></div>
+    <input id="back" type="button" value="返回上一页" onclick="javascript:history.back(-1);">
+</body>
+
+
+</html>
