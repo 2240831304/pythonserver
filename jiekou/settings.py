@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wechat',
+    'readrecord',
 ]
 
 MIDDLEWARE = [
@@ -82,8 +83,24 @@ DATABASES = {
         'PORT': 3306,
         'USER': 'wechat',
         'PASSWORD': 'wechat2018@)!*',
+    },
+    'readrecord': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'readrecord',
+        'HOST': 'localhost',
+        'PORT': 3306,
+        'USER': 'wechat',
+        'PASSWORD': 'wechat2018@)!*',
     }
 }
+
+DATABASE_ROUTERS = ['jiekou.database_router.DatabaseAppsRouter']
+
+DATABASE_APPS_MAPPING = {
+    # 'app_name':'database_name',
+    'readrecord': 'readrecord',
+}
+
 
 
 # Password validation

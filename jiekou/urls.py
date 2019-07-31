@@ -20,5 +20,6 @@ from django.conf.urls import include,url
 
 urlpatterns = [
     url('admin/', admin.site.urls),
+    url(r'^readrecord/', include('readrecord.urls')),
     url(r'^', include('wechat.urls'))
 ]
