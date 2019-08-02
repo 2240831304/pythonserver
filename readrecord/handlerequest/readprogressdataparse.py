@@ -27,6 +27,17 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
     def endElement(self, tag):
         if tag == "readProgress":
             readprogresstable.saveReadData(self)
+            self.serial = ""
+            self.bookName = ""
+            self.bookId = 0
+            self.progress = 0
+            self.readTime = 0
+            self.readCount = 0
+            self.startTime = 0
+            self.endTime = 0
+            self.wordCount = 0
+            self.pageCount = 0
+
         self.CurrentData = ""
 
     def characters(self, content):
