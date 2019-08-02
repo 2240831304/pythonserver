@@ -5,5 +5,5 @@ from django.conf.urls import url
 from readrecord import views
 
 urlpatterns = [
-    url(r'^readprogress', views.handle_readrecord_request),
+    url(r'^readrecordapi.aspx', views.handle_readrecord_request),
 ]
