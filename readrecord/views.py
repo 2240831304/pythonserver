@@ -15,6 +15,9 @@ from readrecord.handlerequest import readprogressreqhandle
 # Create your views here.
 from django.http import HttpResponse
 
+def handle_readrecord_test(request):
+    return render(request, 'readrecord/test.html')
+
 
 def handle_readrecord_request(request):
 
