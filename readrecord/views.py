@@ -10,10 +10,13 @@ sys.setdefaultencoding('utf-8')
 
 from django.shortcuts import render
 from readrecord.handlerequest import readprogressreqhandle
+from readrecord.handlerequest import annotationreqhandle
+from readrecord.handlerequest import recentbookhandle
 
 
 # Create your views here.
 from django.http import HttpResponse
+
 
 def handle_readrecord_test(request):
     return render(request, 'readrecord/test.html')
@@ -30,6 +33,10 @@ def handle_readrecord_request(request):
 
         if requestAction == 'postReadProgressList':
             readprogressreqhandle.Handle_Readprogress_Post(request)
+        elif requestAction == 'postAnnotationList':
+            annotationreqhandle.Handle_Annotation_Post(request)
+        elif requestAction == 'postRecentList':
+            recentbookhandle.Handle_Recentbook_Post(request)
 
     return HttpResponse("wsisjwisjwisw")
     # return render(request, 'readrecord/test.html')

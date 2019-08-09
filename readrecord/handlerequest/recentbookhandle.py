@@ -2,16 +2,15 @@
 
 import xml.sax
 import xml.sax.handler
-from readrecord.handlerequest import readprogressdataparse
+
+from readrecord.handlerequest import recentbookdataparse
 
 
-def Handle_Readprogress_Post(request):
-    print ("readrecord.handlerequest readprogressreqhandle Handle_Readprogress_Post!!")
-
+def Handle_Recentbook_Post(request):
     bodyData = request.body
     serial = request.META.get('HTTP_SERIAL', '')
 
     # 重写 ContextHandler
-    Handler = readprogressdataparse.ReadProgressHandler()
+    Handler = recentbookdataparse.RecentBookDataParse()
     Handler.setSerial(serial)
     xml.sax.parseString(bodyData, Handler)
