@@ -24,7 +24,7 @@ def handle_readrecord_test(request):
 
 def handle_readrecord_request(request):
     returnResult = {}
-    handleResult = ''
+    resultCode = '0'
 
     if request.method == 'GET':
         print ("readrord view handle_readrecord_request get!!!!!!")
@@ -38,15 +38,11 @@ def handle_readrecord_request(request):
         elif requestAction == 'postAnnotationList':
             annotationreqhandle.Handle_Annotation_Post(request)
         elif requestAction == 'postRecentList':
-            handleResult = recentbookhandle.Handle_Recentbook_Post(request)
+            resultCode = recentbookhandle.Handle_Recentbook_Post(request)
 
-    if handleResult == 'normal':
-        returnResult['result-code'] = '23'
-    elif handleResult == 'abnormal':
-        returnResult['result-code'] = '1002'
-    else:
-        returnResult['result-code'] = '1003'
+    response = HttpResponse()
+    response.setdefault('result-code',resultCode)
 
-    return HttpResponse(returnResult)
+    return response
 
 

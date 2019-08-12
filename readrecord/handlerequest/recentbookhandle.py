@@ -10,7 +10,7 @@ def Handle_Recentbook_Post(request):
     bodyData = request.body
     serial = request.META.get('HTTP_SERIAL', '')
 
-    HandleResult = 'normal'
+    resultCode = '0'
 
     try:
         # 重写 ContextHandler
@@ -19,6 +19,6 @@ def Handle_Recentbook_Post(request):
         xml.sax.parseString(bodyData, Handler)
     except:
         print ("Handle_Recentbook_Post parse data,or save data to database Peanut error!!!")
-        HandleResult = 'abnormal'
+        resultCode = '1028'
 
-    return HandleResult
+    return resultCode
