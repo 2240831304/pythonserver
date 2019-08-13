@@ -44,5 +44,3 @@ def handle_readrecord_request(request):
     response.setdefault('result-code',resultCode)
 
     return response
-
-

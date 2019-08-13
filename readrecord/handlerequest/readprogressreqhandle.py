@@ -11,7 +11,15 @@ def Handle_Readprogress_Post(request):
     bodyData = request.body
     serial = request.META.get('HTTP_SERIAL', '')
 
-    # 重写 ContextHandler
-    Handler = readprogressdataparse.ReadProgressHandler()
-    Handler.setSerial(serial)
-    xml.sax.parseString(bodyData, Handler)
+    resultCode = '0'
+
+    try:
+        # 重写 ContextHandler
+        Handler = readprogressdataparse.ReadProgressHandler()
+        Handler.setSerial(serial)
+        xml.sax.parseString(bodyData, Handler)
+    except:
+        print ("Handle_Readprogress_Post parse data,or save data to database Peanut error!!!")
+        resultCode = '1028'
+
+    return resultCode
