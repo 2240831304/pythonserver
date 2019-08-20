@@ -34,13 +34,14 @@ def Handle_Recentbook_Post(request):
 def Hand_Recentbook_Get(request):
     serialid = request.META.get('HTTP_SERIAL', '')
     resultCode = '0'
+    returnXmlData = ''
 
     try:
         dataList = recentbooklist.objects.filter(serial=serialid,state=1)
     except:
         print ("Hand_Recentbook_Get select database of table recentbooklist faile!!!!!")
         resultCode = '1028'
-        return resultCode
+        return resultCode,returnXmlData
 
     if dataList:
         doc = Document()
@@ -52,7 +53,7 @@ def Hand_Recentbook_Get(request):
         for value in dataList:
             Add_Element(doc,getRecentListReq,value)
     else:
-        return resultCode
+        return resultCode,returnXmlData
 
     # print (doc.toxml('UTF-8'))
     returnxmlData = doc.toxml('UTF-8')
