@@ -60,6 +60,8 @@ class recentbooklist(models.Model):
     charId = models.IntegerField()
     pageId = models.IntegerField()
     content = models.TextField()
+    timestamp = models.IntegerField(default=0)
+    state = models.BooleanField(default=False)
 
     class Meta:
         app_label = 'readrecord'

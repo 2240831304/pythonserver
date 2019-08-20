@@ -23,24 +23,35 @@ def handle_readrecord_test(request):
 
 
 def handle_readrecord_request(request):
-    returnResult = {}
     resultCode = '0'
+    returnXmlData = ''
 
     if request.method == 'GET':
         print ("readrord view handle_readrecord_request get!!!!!!")
+        requestAction = request.META.get('HTTP_ACTION', '')
+        print ('readrord view handle_readrecord_request requestAction= %s' % requestAction)
+        if requestAction == 'getRecentList':
+            resultCode,returnXmlData = recentbookhandle.Hand_Recentbook_Get(request)
+
+        response = HttpResponse()
+        response.setdefault('result-code',resultCode)
+        response.content_type = 'application/xml'
+        response.content = returnXmlData
+
+        return response
+
     elif request.method == 'POST':
         print ("readrord view handle_readrecord_request post!!!!!!")
         requestAction = request.META.get('HTTP_ACTION', '')
         print ('readrord view handle_readrecord_request requestAction= %s' %requestAction)
 
         if requestAction == 'postReadProgressList':
-            readprogressreqhandle.Handle_Readprogress_Post(request)
+            resultCode = readprogressreqhandle.Handle_Readprogress_Post(request)
         elif requestAction == 'postAnnotationList':
-            annotationreqhandle.Handle_Annotation_Post(request)
+            resultCode = annotationreqhandle.Handle_Annotation_Post(request)
         elif requestAction == 'postRecentList':
             resultCode = recentbookhandle.Handle_Recentbook_Post(request)
 
-    response = HttpResponse()
-    response.setdefault('result-code',resultCode)
-
-    return response
+        response = HttpResponse()
+        response.setdefault('result-code',resultCode)
+        return response

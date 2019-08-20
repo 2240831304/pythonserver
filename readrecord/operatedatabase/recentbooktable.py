@@ -28,5 +28,6 @@ def saveReadData(data):
     saveObject.pageId = data.pageId
     saveObject.content = data.content
     saveObject.serial = data.serial
+    saveObject.state = 1;
 
     saveObject.save()
