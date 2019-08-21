@@ -36,6 +36,10 @@ def Hand_Recentbook_Get(request):
     resultCode = '0'
     returnXmlData = ''
 
+    if serialid == '':
+        resultCode = '1018'
+        return resultCode,returnXmlData
+
     try:
         dataList = recentbooklist.objects.filter(serial=serialid,state=1)
     except:
