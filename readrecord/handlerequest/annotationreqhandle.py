@@ -23,8 +23,7 @@ def Handle_Annotation_Post(request):
         xml.sax.parseString(bodyData, Handler)
 
         listTemp = Handler.getParseData()
-        print (listTemp)
-        annotationtable.saveReadData(listTemp)
+        resultCode = annotationtable.saveReadData(listTemp)
 
     except:
         print ("Handle_Annotation_Post parse data,or save data to database Peanut error!!!")
