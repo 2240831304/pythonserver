@@ -4,13 +4,8 @@
 import xml.sax
 import xml.sax.handler
 
-from readrecord.operatedatabase import annotationtable
-
-
-class AnnotationDataParse(xml.sax.handler.ContentHandler):
+class AnnotationData:
     def __init__(self):
-        self.curTag = ''
-        self.position = ''
         self.serial = ''
         self.bookName = ''
         self.bookId = 0
@@ -28,32 +23,31 @@ class AnnotationDataParse(xml.sax.handler.ContentHandler):
         self.state = -1
         self.annotationId = 0
 
+
+class AnnotationDataParse(xml.sax.handler.ContentHandler):
+
+    def __init__(self):
+        self.curTag = ''
+        self.position = ''
+        self.serial = ''
+        self.antationData = None
+        self.dataList = list()
+
+
     def startElement(self, tag, attributes):
         if tag == 'startPosition':
             self.position = tag
         elif tag == 'endPosition':
             self.position = tag
+        elif tag == 'annotation':
+            self.antationData = AnnotationData()
+            self.antationData.serial = self.serial
         else:
             self.curTag = tag
 
     def endElement(self, tag):
         if tag == 'annotation':
-            annotationtable.saveReadData(self)
-            self.bookName = ''
-            self.bookId = 0
-            self.starthtmlPath = ''
-            self.startparagraphId = 0
-            self.startelementId = 0
-            self.startcharId = 0
-            self.endhtmlPath = ''
-            self.endparagraphId = 0
-            self.endelementId = 0
-            self.endcharId = 0
-            self.content = ''
-            self.origContent = ''
-            self.timestamp = 0
-            self.state = -1
-            self.annotationId = 0
+            self.dataList.append(self.antationData)
         elif tag == 'startPosition':
             self.position = ''
         elif tag == 'endPosition':
@@ -63,39 +57,41 @@ class AnnotationDataParse(xml.sax.handler.ContentHandler):
     def characters(self, text):
         if self.position == 'startPosition':
             if self.curTag == 'htmlPath':
-                self.starthtmlPath = text
+                self.antationData.starthtmlPath = text
             elif self.curTag == 'paragraphId':
-                self.startparagraphId = text
+                self.antationData.startparagraphId = text
             elif self.curTag == 'elementId':
-                self.startelementId = text
+                self.antationData.startelementId = text
             elif self.curTag == 'charId':
-                self.startcharId = text
+                self.antationData.startcharId = text
         elif self.position == 'endPosition':
             if self.curTag == 'htmlPath':
-                self.endhtmlPath = text
+                self.antationData.endhtmlPath = text
             elif self.curTag == 'paragraphId':
-                self.endparagraphId = text
+                self.antationData.endparagraphId = text
             elif self.curTag == 'elementId':
-                self.endelementId = text
+                self.antationData.endelementId = text
             elif self.curTag == 'charId':
-                self.endcharId = text
+                self.antationData.endcharId = text
         else:
             if self.curTag == 'bookName':
-                self.bookName = text
+                self.antationData.bookName = text
             elif self.curTag == 'bookId':
-                self.bookId = text
+                self.antationData.bookId = text
             elif self.curTag == 'content':
-                self.content = text
+                self.antationData.content = text
             elif self.curTag == 'origContent':
-                self.origContent = text
+                self.antationData.origContent = text
             elif self.curTag == 'timestamp':
-                self.timestamp = text
+                self.antationData.timestamp = text
             elif self.curTag == 'state':
-                self.state = text
+                self.antationData.state = text
             elif self.curTag == 'annotationId':
-                self.annotationId = text
-            elif self.curTag == 'serial':
-                self.serial = text
+                self.antationData.annotationId = text
 
     def setSerial(self, sn):
         self.serial = sn
+
+
+    def getParseData(self):
+        return self.dataList
