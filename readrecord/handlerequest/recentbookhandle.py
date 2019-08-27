@@ -6,6 +6,7 @@ from xml.dom.minidom import Document
 
 from readrecord.handlerequest import recentbookdataparse
 from readrecord.models import recentbooklist
+from readrecord.operatedatabase import recentbooktable
 
 XML_Header = '<?xml version="1.0" encoding="utf-8"?>'
 
@@ -17,12 +18,14 @@ def Handle_Recentbook_Post(request):
     resultCode = '0'
 
     try:
-        recentbooklist.objects.filter(serial=serialid).update(state=0)
-
         # 重写 ContextHandler
         Handler = recentbookdataparse.RecentBookDataParse()
         Handler.setSerial(serialid)
         xml.sax.parseString(bodyData, Handler)
+
+        tempData = Handler.getParseData()
+        resultCode = recentbooktable.saveReadData(tempData,serialid)
+
     except:
         print ("Handle_Recentbook_Post parse data,or save data to database Peanut error!!!")
         resultCode = '1028'
