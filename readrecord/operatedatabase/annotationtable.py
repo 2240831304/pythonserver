@@ -7,6 +7,7 @@ sys.setdefaultencoding('utf-8')
 
 from readrecord.models import annotation
 from django.db import transaction
+import traceback
 
 
 def saveReadData(dataList):
@@ -47,6 +48,7 @@ def saveReadData(dataList):
             transaction.rollback(savePoint)
             print ('annotationtable saveReadData faile!!!!!')
             resultCode = '1028'
+        traceback.print_exc()
 
     return resultCode
 

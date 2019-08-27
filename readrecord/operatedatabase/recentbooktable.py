@@ -7,6 +7,7 @@ sys.setdefaultencoding('utf-8')
 
 from readrecord.models import recentbooklist
 from django.db import transaction
+import traceback
 
 
 def saveReadData(dataList,serialid):
@@ -39,9 +40,6 @@ def saveReadData(dataList,serialid):
 
         product_list_to_insert.append(saveObject)
 
-    # 用于事务保存
-    savePoint = None
-
     try:
         with transaction.atomic():
             for object in product_list_to_insert:
@@ -49,5 +47,6 @@ def saveReadData(dataList,serialid):
     except Exception as error:
         print ('recentbooktable saveReadData faile!!!!!')
         resultCode = '1028'
+        traceback.print_exc()
 
     return resultCode
