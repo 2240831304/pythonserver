@@ -9,6 +9,7 @@ from readrecord.models import recentbooklist
 from readrecord.operatedatabase import recentbooktable
 
 XML_Header = '<?xml version="1.0" encoding="utf-8"?>'
+import traceback
 
 
 def Handle_Recentbook_Post(request):
@@ -16,6 +17,9 @@ def Handle_Recentbook_Post(request):
     serialid = request.META.get('HTTP_SERIAL', '')
 
     resultCode = '0'
+
+    if (serialid == '') or (bodyData == ''):
+        return resultCode
 
     try:
         # 重写 ContextHandler
@@ -29,6 +33,7 @@ def Handle_Recentbook_Post(request):
     except:
         print ("Handle_Recentbook_Post parse data,or save data to database Peanut error!!!")
         resultCode = '1028'
+        traceback.print_exc()
 
     return resultCode
 

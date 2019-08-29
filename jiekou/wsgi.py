@@ -15,6 +15,8 @@ PROJECT_DIR = dirname(dirname(abspath(__file__)))#3
 import sys # 4
 sys.path.insert(0,PROJECT_DIR) # 5
 
+os.environ['HTTPS'] = "on"
+
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jiekou.settings")

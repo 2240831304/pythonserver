@@ -14,6 +14,9 @@ def Handle_Readprogress_Post(request):
 
     resultCode = '0'
 
+    if (serial == '') or (bodyData == ''):
+        return resultCode
+
     try:
         # 重写 ContextHandler
         Handler = readprogressdataparse.ReadProgressHandler()
