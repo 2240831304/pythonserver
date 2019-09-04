@@ -49,7 +49,7 @@ def Hand_Recentbook_Get(request):
         return resultCode,returnXmlData
 
     try:
-        dataList = recentbooklist.objects.filter(serial=serialid,state=1)
+        dataList = recentbooklist.objects.values("bookName","bookId").filter(serial=serialid,state=1)
     except:
         print ("Hand_Recentbook_Get select database of table recentbooklist faile!!!!!")
         resultCode = '1028'
@@ -77,13 +77,13 @@ def Add_Element(doc,node,data):
     book = doc.createElement('book')
     node.appendChild(book)
 
-    bookName = doc.createElement('bookName')
-    bookNameText = doc.createTextNode(data.bookName)
-    bookName.appendChild(bookNameText)
+    bookNameNode = doc.createElement('bookName')
+    bookNameText = doc.createTextNode(data['bookName'])
+    bookNameNode.appendChild(bookNameText)
 
-    bookId = doc.createElement('bookId')
-    bookIdText = doc.createTextNode(str(data.bookId))
-    bookId.appendChild(bookIdText)
+    bookIdNode = doc.createElement('bookId')
+    bookIdText = doc.createTextNode(str(data['bookId']))
+    bookIdNode.appendChild(bookIdText)
 
-    book.appendChild(bookName)
-    book.appendChild(bookId)
+    book.appendChild(bookNameNode)
+    book.appendChild(bookIdNode)

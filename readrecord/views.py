@@ -32,6 +32,8 @@ def handle_readrecord_request(request):
         print ('readrord view handle_readrecord_request requestAction= %s' % requestAction)
         if requestAction == 'getRecentList':
             resultCode,returnXmlData = recentbookhandle.Hand_Recentbook_Get(request)
+        elif requestAction == 'getAnnotationList':
+            resultCode, returnXmlData = annotationreqhandle.Hand_Annotation_Get(request)
 
         response = HttpResponse()
         response.setdefault('result-code',resultCode)
