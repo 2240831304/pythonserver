@@ -4,6 +4,7 @@ import xml.sax
 import xml.sax.handler
 from readrecord.handlerequest import readprogressdataparse
 from readrecord.operatedatabase import readprogresstable
+import traceback
 
 
 def Handle_Readprogress_Post(request):
@@ -27,5 +28,6 @@ def Handle_Readprogress_Post(request):
     except:
         print ("Handle_Readprogress_Post parse data,or save data to database Peanut error!!!")
         resultCode = '1028'
+        traceback.print_exc()
 
     return resultCode
