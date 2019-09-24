@@ -3,6 +3,7 @@
 
 import xml.sax
 import xml.sax.handler
+import time
 
 class ReadProgressData:
     def __init__(self):
@@ -38,6 +39,7 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
         self.dataObject = ReadProgressData()
         self.dataList = list()
         self.dataItem = ReadProgressData()
+        self.comDate = ""
 
     def startElement(self, tag, attributes):
         if tag == 'readProgress':
@@ -48,19 +50,22 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
         self.CurrentData = ""
         if tag == "readProgress":
             if self.dataItem.bookName == "" and self.dataItem.bookId == 0:
-                self.dataItem.bookName = self.dataObject.bookName
-                self.dataItem.bookId = self.dataObject.bookId
-                self.dataItem.serial = self.serial
+                self.setBookInfo()
+
+            dateTp = time.localtime(int(self.dataObject.endTime))
+            curDateTp = time.strftime("%Y-%m-%d", dateTp)
 
             if self.dataItem.bookName != self.dataObject.bookName or \
-                    self.dataItem.bookId != self.dataObject.bookId:
+                    self.dataItem.bookId != self.dataObject.bookId or \
+                    self.comDate != curDateTp:
                 self.dataList.append(self.dataItem)
                 self.dataItem = ReadProgressData()
-                self.dataItem.bookName = self.dataObject.bookName
-                self.dataItem.bookId = self.dataObject.bookId
-                self.dataItem.serial = self.serial
+                self.setBookInfo()
 
-            self.dataItem.progress = self.dataObject.progress
+            if self.dataItem.progress < self.dataObject.progress:
+                self.dataItem.progress = self.dataObject.progress
+            self.dataItem.startTime = self.dataObject.startTime
+            self.dataItem.endTime = self.dataObject.endTime
             self.dataItem.readTime += self.dataObject.readTime
             self.dataItem.readCount += self.dataObject.readCount
             self.dataItem.wordCount += self.dataObject.wordCount
@@ -68,6 +73,13 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
 
         if tag == "PostReadProgressListReq":
             self.dataList.append(self.dataItem)
+
+    def setBookInfo(self):
+        self.dataItem.bookName = self.dataObject.bookName
+        self.dataItem.bookId = self.dataObject.bookId
+        self.dataItem.serial = self.serial
+        timeTemp = time.localtime(int(self.dataObject.endTime))
+        self.comDate = time.strftime("%Y-%m-%d", timeTemp)
 
 
     '''
