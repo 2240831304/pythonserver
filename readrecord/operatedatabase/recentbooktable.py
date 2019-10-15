@@ -22,7 +22,7 @@ def saveReadData(dataList,serialid):
 
     for data in dataList:
         try:
-            saveObject = recentbooklist.objects.get(bookName=data.bookName, bookId=data.bookId)
+            saveObject = recentbooklist.objects.get(serial=serialid, bookName=data.bookName, bookId=data.bookId)
         except recentbooklist.DoesNotExist:
             saveObject = recentbooklist()
 
