@@ -87,3 +87,37 @@ def Add_Element(doc,node,data):
 
     book.appendChild(bookNameNode)
     book.appendChild(bookIdNode)
+
+
+def Hand_Allbooklist_Get(request):
+    serialid = request.META.get('HTTP_SERIAL', '')
+    resultCode = '0'
+    returnXmlData = ''
+
+    if serialid == '':
+        resultCode = '1018'
+        return resultCode,returnXmlData
+
+    try:
+        dataList = recentbooklist.objects.values("bookName","bookId").filter(serial=serialid)
+    except:
+        print ("Hand_Allbooklist_Get select database of table recentbooklist faile!!!!!")
+        resultCode = '1028'
+        return resultCode,returnXmlData
+
+    if dataList:
+        doc = Document()
+        root = doc.createElement('Response')
+        doc.appendChild(root)
+        getRecentListReq = doc.createElement('GetRecentListReq')
+        root.appendChild(getRecentListReq)
+
+        for value in dataList:
+            Add_Element(doc,getRecentListReq,value)
+    else:
+        return resultCode,returnXmlData
+
+    # print (doc.toxml('UTF-8'))
+    returnxmlData = doc.toxml('UTF-8')
+
+    return resultCode,returnxmlData
