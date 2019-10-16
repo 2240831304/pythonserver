@@ -54,6 +54,8 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
 
             dateTp = time.localtime(int(self.dataObject.endTime))
             curDateTp = time.strftime("%Y-%m-%d", dateTp)
+            # print (curDateTp)
+            timeArray = time.strptime(curDateTp, "%Y-%m-%d")
 
             if self.dataItem.bookName != self.dataObject.bookName or \
                     self.dataItem.bookId != self.dataObject.bookId or \
@@ -64,7 +66,8 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
 
             if self.dataItem.progress < self.dataObject.progress:
                 self.dataItem.progress = self.dataObject.progress
-            self.dataItem.startTime = self.dataObject.startTime
+            #self.dataItem.startTime = self.dataObject.startTime
+            self.dataItem.startTime = int(time.mktime(timeArray))
             self.dataItem.endTime = self.dataObject.endTime
             self.dataItem.readTime += self.dataObject.readTime
             self.dataItem.readCount += self.dataObject.readCount
