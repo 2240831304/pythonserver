@@ -12,6 +12,7 @@ from django.shortcuts import render
 from readrecord.handlerequest import readprogressreqhandle
 from readrecord.handlerequest import annotationreqhandle
 from readrecord.handlerequest import recentbookhandle
+from readrecord.readdataprovide import readdatareqhandle
 
 
 # Create your views here.
@@ -36,6 +37,8 @@ def handle_readrecord_request(request):
             resultCode, returnXmlData = recentbookhandle.Hand_Allbooklist_Get(request)
         elif requestAction == 'getAnnotationList':
             resultCode, returnXmlData = annotationreqhandle.Hand_Annotation_Get(request)
+        elif requestAction == 'getReadDateList':
+            resultCode, returnXmlData = readdatareqhandle.Handle_ReadDateList_Get(request)
 
         response = HttpResponse()
         response.setdefault('result-code',resultCode)
