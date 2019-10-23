@@ -13,7 +13,7 @@ def getReadDateList(serialID):
     resultCode = '0'
 
     try:
-        list = readprogress.objects.values("startTime").distinct().filter(serial=serialID)
+        list = readprogress.objects.values("startTime","bookName","bookId").distinct().filter(serial=serialID)
         # print (list)
     except:
         print ('getReadDateList faile of select data from table!!!!!')
@@ -22,8 +22,7 @@ def getReadDateList(serialID):
     return resultCode,list
 
 
-'''
+
 if __name__ == '__main__':
     getReadDateList('OS6BB11727B00997')
 
-'''
