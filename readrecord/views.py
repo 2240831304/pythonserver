@@ -39,6 +39,8 @@ def handle_readrecord_request(request):
             resultCode, returnXmlData = annotationreqhandle.Hand_Annotation_Get(request)
         elif requestAction == 'getReadDateBookList':
             resultCode, returnXmlData = readdatareqhandle.Handle_ReadDateList_Get(request)
+        elif requestAction == 'getPeriodReadWordTime':
+            resultCode, returnXmlData = readdatareqhandle.Handle_ReadWordTime_Get(request)
 
         response = HttpResponse()
         response.setdefault('result-code',resultCode)
