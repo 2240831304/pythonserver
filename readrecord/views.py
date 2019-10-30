@@ -28,7 +28,7 @@ def handle_readrecord_request(request):
     returnXmlData = ''
 
     if request.method == 'GET':
-        print ("readrord view handle_readrecord_request get!!!!!!")
+        print ("readrecord view handle_readrecord_request get!!!!!!")
         requestAction = request.META.get('HTTP_ACTION', '')
         print ('readrord view handle_readrecord_request requestAction= %s' % requestAction)
         if requestAction == 'getRecentList':
@@ -41,6 +41,8 @@ def handle_readrecord_request(request):
             resultCode, returnXmlData = readdatareqhandle.Handle_ReadDateList_Get(request)
         elif requestAction == 'getPeriodReadWordTime':
             resultCode, returnXmlData = readdatareqhandle.Handle_ReadWordTime_Get(request)
+        elif requestAction == 'getBookDataList':
+            resultCode, returnXmlData = readdatareqhandle.Hand_EveryBookData_Get(request)
 
         response = HttpResponse()
         response.setdefault('result-code',resultCode)

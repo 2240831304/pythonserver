@@ -128,7 +128,7 @@ def getYearReadWordTime(serialID):
 
 
 if __name__ == '__main__':
-    # getReadDateList('OS6BB11727B00997')
+    # getReadDateList('234234231234455')
     getTotleReadWordTime('234234231234455')
     getTodayReadWordTime('234234231234455')
     getWeekReadWordTime('234234231234455')
