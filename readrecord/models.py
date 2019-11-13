@@ -6,15 +6,15 @@ from django.db import models
 # create table to store read data of progress
 
 class readprogress(models.Model):
-    serial = models.CharField(max_length=20)
-    bookName = models.CharField(max_length=60)
+    serial = models.CharField(max_length=20, db_index=True)
+    bookName = models.CharField(max_length=60, db_index=True)
     bookId = models.BigIntegerField()
     progress = models.IntegerField()
     readTime = models.IntegerField()
     readCount = models.IntegerField()
     startTime = models.BigIntegerField()
     endTime = models.BigIntegerField()
-    wordCount = models.BigIntegerField()
+    wordCount = models.IntegerField()
     pageCount = models.IntegerField()
 
     class Meta:
@@ -25,8 +25,8 @@ class readprogress(models.Model):
 
 
 class annotation(models.Model):
-    serial = models.CharField(max_length=20)
-    bookName = models.CharField(max_length=60)
+    serial = models.CharField(max_length=20, db_index=True)
+    bookName = models.CharField(max_length=60, db_index=True)
     bookId = models.IntegerField()
     starthtmlPath = models.CharField(max_length=40)
     startparagraphId = models.IntegerField()
@@ -50,7 +50,7 @@ class annotation(models.Model):
 
 
 class recentbooklist(models.Model):
-    serial = models.CharField(max_length=20)
+    serial = models.CharField(max_length=20, db_index=True)
     bookName = models.CharField(max_length=100)
     bookId = models.IntegerField()
     bookFormat = models.CharField(max_length=15)
