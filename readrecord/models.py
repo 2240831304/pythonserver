@@ -68,3 +68,22 @@ class recentbooklist(models.Model):
         db_table = 'recentbooklist'
         verbose_name = '最近阅读的图书'
         verbose_name_plural = verbose_name
+
+
+class bookreaddata(models.Model):
+    serial = models.CharField(max_length=15, db_index=True)
+    bookName = models.CharField(max_length=100)
+    bookId = models.IntegerField()
+    wordcount = models.IntegerField()
+    timecount = models.IntegerField()
+    maxprogress = models.IntegerField()
+    pagecount = models.IntegerField()
+    daycount = models.IntegerField()
+    notecount = models.IntegerField()
+
+
+    class Meta:
+        app_label = 'readrecord'
+        db_table = 'bookreaddata'
+        verbose_name = '每本书阅读数据'
+        verbose_name_plural = verbose_name
