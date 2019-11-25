@@ -42,7 +42,8 @@ def handle_readrecord_request(request):
         elif requestAction == 'getPeriodReadWordTime':
             resultCode, returnXmlData = readdatareqhandle.Handle_ReadWordTime_Get(request)
         elif requestAction == 'getBookDataList':
-            resultCode, returnXmlData = readdatareqhandle.Hand_EveryBookData_Get(request)
+            # resultCode, returnXmlData = readdatareqhandle.Hand_EveryBookData_Get(request)
+            resultCode, returnXmlData = readdatareqhandle.Hand_EveryBookReadData_Get(request)
 
         response = HttpResponse()
         response.setdefault('result-code',resultCode)

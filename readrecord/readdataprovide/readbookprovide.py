@@ -6,7 +6,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','jiekou.settings')
 django.setup()
 from django.db.models import Sum,Max
 
-from readrecord.models import readprogress,recentbooklist
+from readrecord.models import readprogress,recentbooklist,bookreaddata
 
 
 def getBookReadDataList(serialID):
@@ -27,7 +27,12 @@ def getBookReadDataList(serialID):
     return resultValue
 
 
+def getReadDataList(serialID):
+    list = bookreaddata.objects.values("bookName","bookId","wordcount","timecount","maxprogress").filter(serial=serialID)
 
+    # print (list)
+    return list
 
 if __name__ == '__main__':
     getBookReadDataList('234234231234455')
+    getReadDataList('OF6IC31811B00030')

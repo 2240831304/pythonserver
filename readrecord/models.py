@@ -71,15 +71,15 @@ class recentbooklist(models.Model):
 
 
 class bookreaddata(models.Model):
-    serial = models.CharField(max_length=15, db_index=True)
+    serial = models.CharField(max_length=20, db_index=True)
     bookName = models.CharField(max_length=100)
     bookId = models.IntegerField()
-    wordcount = models.IntegerField()
-    timecount = models.IntegerField()
-    maxprogress = models.IntegerField()
-    pagecount = models.IntegerField()
-    daycount = models.IntegerField()
-    notecount = models.IntegerField()
+    wordcount = models.IntegerField(default=0)
+    timecount = models.IntegerField(default=0)
+    maxprogress = models.IntegerField(default=0)
+    pagecount = models.IntegerField(default=0)
+    daycount = models.IntegerField(default=0)
+    notecount = models.IntegerField(default=0)
 
 
     class Meta:

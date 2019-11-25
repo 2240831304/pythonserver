@@ -252,3 +252,62 @@ def AddBookInfo(doc, node, data):
     bookNode.appendChild(readProgressNode)
 
     node.appendChild(bookNode)
+
+
+# get every book read data,drecit from table of bookreaddata
+def Hand_EveryBookReadData_Get(request):
+    serialid = request.META.get('HTTP_SERIAL', '')
+    resultCode = '0'
+    returnXmlData = ''
+
+    if serialid == '':
+        resultCode = '1018'
+        return resultCode,returnXmlData
+
+    bookList = readbookprovide.getReadDataList(serialid)
+
+    if bookList:
+        doc = Document()
+        root = doc.createElement('Response')
+        doc.appendChild(root)
+        bookListNode = doc.createElement('GetBookDataList')
+        root.appendChild(bookListNode)
+
+        for value in bookList:
+            AddBookNode(doc,bookListNode,value)
+    else:
+        return resultCode, returnXmlData
+
+    returnXmlData = doc.toxml('UTF-8')
+    return resultCode, returnXmlData
+
+
+def AddBookNode(doc, node, data):
+    bookNameNode = doc.createElement("BookName")
+    bookNameText = doc.createTextNode(str(data['bookName']))
+    bookNameNode.appendChild(bookNameText)
+
+    bookIdNode = doc.createElement("BookId")
+    bookIdText = doc.createTextNode(str(data['bookId']))
+    bookIdNode.appendChild(bookIdText)
+
+    readTimeNode = doc.createElement("ReadTime")
+    readTimeText = doc.createTextNode(str(data['timecount']))
+    readTimeNode.appendChild(readTimeText)
+
+    readWordNode = doc.createElement("ReadWord")
+    readWordText = doc.createTextNode(str(data['wordcount']))
+    readWordNode.appendChild(readWordText)
+
+    readProgressNode = doc.createElement("ReadProgress")
+    readProgressText = doc.createTextNode(str(data['maxprogress']))
+    readProgressNode.appendChild(readProgressText)
+
+    bookNode = doc.createElement("Book")
+    bookNode.appendChild(bookNameNode)
+    bookNode.appendChild(bookIdNode)
+    bookNode.appendChild(readTimeNode)
+    bookNode.appendChild(readWordNode)
+    bookNode.appendChild(readProgressNode)
+
+    node.appendChild(bookNode)

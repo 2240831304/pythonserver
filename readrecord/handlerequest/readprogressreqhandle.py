@@ -6,6 +6,9 @@ from readrecord.handlerequest import readprogressdataparse
 from readrecord.operatedatabase import readprogresstable
 import traceback
 
+from readrecord.rabbitmq import readdataproducer
+import json
+
 
 def Handle_Readprogress_Post(request):
     print ("readrecord.handlerequest readprogressreqhandle Handle_Readprogress_Post!!")
@@ -30,4 +33,25 @@ def Handle_Readprogress_Post(request):
         resultCode = '1028'
         traceback.print_exc()
 
+    addQueueTask(tempData)
+
     return resultCode
+
+
+def addQueueTask(tasklist):
+    producer = readdataproducer.ReadDataProducer()
+    flag = producer.connect_mq()
+
+    tmp = None
+    dict = {}
+    if flag:
+        for task in tasklist:
+            if (tmp != task):
+                dict["serial"] = task.serial
+                dict["bookName"] = task.bookName
+                dict["bookId"] = task.bookId
+                producer.addTask(json.dumps(dict))
+
+            tmp = task
+
+    producer.quit()
