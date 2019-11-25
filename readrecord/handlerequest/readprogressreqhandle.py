@@ -42,16 +42,18 @@ def addQueueTask(tasklist):
     producer = readdataproducer.ReadDataProducer()
     flag = producer.connect_mq()
 
-    tmp = None
+    bookname = None
+    bookid = None
     dict = {}
     if flag:
         for task in tasklist:
-            if (tmp != task):
+            if (bookname != task.bookName) or (bookid != task.bookId):
                 dict["serial"] = task.serial
                 dict["bookName"] = task.bookName
                 dict["bookId"] = task.bookId
                 producer.addTask(json.dumps(dict))
 
-            tmp = task
+                bookname = task.bookName
+                bookid = task.bookId
 
     producer.quit()
