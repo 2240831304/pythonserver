@@ -97,7 +97,7 @@ class ReadDataConsumer:
 
 
 if __name__ == '__main__':
-    test = ReadDataConsumer()
-    test.connect_mq()
-    # test.addQueue("SecondQUeue","testKey")
-    test.startConsumer()
+    object = ReadDataConsumer()
+    object.connect_mq()
+    # object.addQueue("SecondQUeue","testKey")
+    object.startConsumer()
