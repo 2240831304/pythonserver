@@ -2,11 +2,13 @@
 
 import pika
 import random
+import json
 
 hostname = 'localhost'
 queueName = 'ReadDataQueue'
 exchangeName = 'ReadDataExchanger'
 rountingKey = 'ReadDataKey'
+megBody = {'serial':'OF6IC31811B00030', 'bookName': 'aff.txt', 'bookId': '0'}
 
 # 新建连接，rabbitmq安装在本地则hostname为'localhost'
 hostname = 'localhost'
@@ -29,6 +31,6 @@ body = 'hello world:%s' % number
 # 交换机; 队列名,写明将消息发往哪个队列; 消息内容
 # routing_key在使用匿名交换机的时候才需要指定，表示发送到哪个队列
 channel.basic_publish(exchange=exchangeName, routing_key=rountingKey,
-                      body=body,properties=pika.BasicProperties(delivery_mode=2))
-print " [x] Sent %s" % body
+                      body=json.dumps(megBody),properties=pika.BasicProperties(delivery_mode=2))
+print "Sent %s" % megBody
 connection.close()

@@ -9,6 +9,7 @@ import pika
 import json
 from readrecord.models import readprogress,bookreaddata
 from django.db.models import Sum,Max
+from multiprocessing import Process
 
 
 hostname = 'localhost'
@@ -17,11 +18,19 @@ exchangeName = 'ReadDataExchanger'
 rountingKey = 'ReadDataKey'
 
 
-class ReadDataConsumer:
+class ReadDataConsumer(Process):
 
     def __init__(self):
+        Process.__init__(self)
         self.channel = None
         self.connection = None
+
+    def run(self):
+        flag = self.connect_mq()
+        if flag:
+            self.startConsumer()
+        else:
+            print ("ReadDataConsumer create read data consumer is faile!!!!!!")
 
 
     def connect_mq(self):
@@ -42,11 +51,13 @@ class ReadDataConsumer:
 
         try:
             self.channel = self.connection.channel()
-            self.channel.queue_declare(queue=queueName, durable=True)
+            self.channel.basic_qos(prefetch_count=1)
 
             self.channel.exchange_declare(exchange=exchangeName, durable=True, exchange_type='direct')
+
+            self.channel.queue_declare(queue=queueName, durable=True)
             self.channel.queue_bind(exchange=exchangeName, queue=queueName, routing_key=rountingKey)
-            self.channel.basic_qos(prefetch_count=1)
+            self.channel.basic_consume(queueName, self.callback, consumer_tag="hello-consumer")
 
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
@@ -56,13 +67,12 @@ class ReadDataConsumer:
 
 
     def startConsumer(self):
-        self.channel.basic_consume(queueName, self.callback, consumer_tag="hello-consumer")
         self.channel.start_consuming()
 
 
     def addQueue(self,name,rountKey):
         self.channel.queue_declare(queue=name, durable=True)
-        self.channel.queue_bind(exchange=exchangeName, queue=name, routing_key=rountingKey)
+        self.channel.queue_bind(exchange=exchangeName, queue=name, routing_key=rountKey)
         self.channel.basic_consume(name, self.callback)
 
 
@@ -98,6 +108,7 @@ class ReadDataConsumer:
 
 if __name__ == '__main__':
     object = ReadDataConsumer()
-    object.connect_mq()
+    # object.connect_mq()
     # object.addQueue("SecondQUeue","testKey")
-    object.startConsumer()
+    object.start()
+    print ("ddddddddddddddddddddddddddd")
