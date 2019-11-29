@@ -18,6 +18,7 @@ exchangeName = 'ReadDataExchanger'
 rountingKey = 'ReadDataKey'
 
 
+
 class ReadDataConsumer(Process):
 
     def __init__(self):
@@ -26,11 +27,16 @@ class ReadDataConsumer(Process):
         self.connection = None
 
     def run(self):
+        self.startConsumer()
+
+    '''
+    def run(self):
         flag = self.connect_mq()
         if flag:
             self.startConsumer()
         else:
             print ("ReadDataConsumer create read data consumer is faile!!!!!!")
+    '''
 
 
     def connect_mq(self):
@@ -100,8 +106,6 @@ class ReadDataConsumer(Process):
 
 
     def quit(self):
-        self.channel.close()
-        self.connection.close()
         self.channel.stop_consuming()
 
 
@@ -111,4 +115,3 @@ if __name__ == '__main__':
     # object.connect_mq()
     # object.addQueue("SecondQUeue","testKey")
     object.start()
-    print ("ddddddddddddddddddddddddddd")
