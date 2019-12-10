@@ -2,6 +2,7 @@
 
 import os
 import django
+#import jiekou
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','jiekou.settings')
 django.setup()
 
@@ -19,15 +20,16 @@ rountingKey = 'ReadDataKey'
 
 
 
-class ReadDataConsumer(Process):
+class ReadDataConsumer:
 
     def __init__(self):
-        Process.__init__(self)
+        # Process.__init__(self)
         self.channel = None
         self.connection = None
 
     def run(self):
         self.startConsumer()
+
 
     '''
     def run(self):
@@ -84,7 +86,7 @@ class ReadDataConsumer(Process):
 
     def callback(self,ch, method, properties, body):
         dict = json.loads(body)
-        print ("ReadDataConsumer callback ,,callback======%r" % dict)
+        # print ("ReadDataConsumer callback ,,callback======%r" % dict)
         bookIndfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId']) \
             .aggregate(progressMax=Max('progress'), timeCount=Sum('readTime'), wordCount=Sum('wordCount'))
 
@@ -108,10 +110,15 @@ class ReadDataConsumer(Process):
     def quit(self):
         self.channel.stop_consuming()
 
+    def signalQuit(self,signum, frame):
+        self.channel.stop_consuming(queueName)
+
 
 
 if __name__ == '__main__':
     object = ReadDataConsumer()
     # object.connect_mq()
     # object.addQueue("SecondQUeue","testKey")
-    object.start()
+    flag = object.connect_mq()
+    if flag:
+        object.startConsumer()
