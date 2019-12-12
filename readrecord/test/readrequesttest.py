@@ -28,6 +28,8 @@ class ReadRequest:
         request.add_header('serial', '234234231234455')
         response = urllib2.urlopen(request)
 
+        print response.read()
+
 
 if __name__ == '__main__':
     testObject = ReadRequest()
