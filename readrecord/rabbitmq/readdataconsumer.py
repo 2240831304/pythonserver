@@ -8,16 +8,17 @@ django.setup()
 
 import pika
 import json
-from readrecord.models import readprogress,bookreaddata
+from readrecord.models import readprogress,bookreaddata,timeperioddata
 from django.db.models import Sum,Max
-from multiprocessing import Process
+# from multiprocessing import Process
+from readrecord.readdataprovide import readtimeprovide
 
 
 hostname = 'localhost'
 queueName = 'ReadDataQueue'
 exchangeName = 'ReadDataExchanger'
 rountingKey = 'ReadDataKey'
-
+periodQueueName = 'PeriodReadDataQueue'
 
 
 class ReadDataConsumer:
@@ -67,6 +68,10 @@ class ReadDataConsumer:
             self.channel.queue_bind(exchange=exchangeName, queue=queueName, routing_key=rountingKey)
             self.channel.basic_consume(queueName, self.callback, consumer_tag="hello-consumer")
 
+            self.channel.queue_declare(queue=periodQueueName, durable=True)
+            self.channel.queue_bind(exchange=exchangeName, queue=periodQueueName, routing_key=rountingKey)
+            self.channel.basic_consume(periodQueueName, self.perioddatacallback, consumer_tag="consumer")
+
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
             return False
@@ -107,11 +112,58 @@ class ReadDataConsumer:
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
+    def perioddatacallback(self,ch, method, properties, body):
+        dict = json.loads(body)
+
+        resultCode, todaydateList = readtimeprovide.getTodayReadWordTime(dict['serial'])
+        resultCode, weekdateList = readtimeprovide.getWeekReadWordTime(dict['serial'])
+        resultCode, monthdateList = readtimeprovide.getMonthReadWordTime(dict['serial'])
+        resultCode, yeardateList = readtimeprovide.getYearReadWordTime(dict['serial'])
+        resultCode, totledateList = readtimeprovide.getTotleReadWordTime(dict['serial'])
+
+        try:
+            saveObject = timeperioddata.objects.get(serial=dict['serial'])
+        except timeperioddata.DoesNotExist:
+            saveObject = timeperioddata()
+
+        if todaydateList['wordCount'] == None:
+            saveObject.todayword = 0
+        else:
+            saveObject.todayword = todaydateList['wordCount']
+
+        if todaydateList['timeCount'] == None:
+            saveObject.todaytime = 0
+        else:
+            saveObject.todaytime = todaydateList['timeCount']
+
+        if weekdateList['wordCount'] == None:
+            saveObject.weekword = 0
+        else:
+            saveObject.weekword = weekdateList['wordCount']
+
+        if weekdateList['timeCount'] == None:
+            saveObject.weektime = 0
+        else:
+            saveObject.weektime = weekdateList['timeCount']
+        saveObject.monthword = monthdateList['wordCount']
+        saveObject.monthtime = monthdateList['timeCount']
+        saveObject.yearword = yeardateList['wordCount']
+        saveObject.yeartime = yeardateList['timeCount']
+        saveObject.totleword = totledateList['wordCount']
+        saveObject.totletime = totledateList['timeCount']
+
+        saveObject.serial = dict['serial']
+        saveObject.save()
+
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+
+
     def quit(self):
         self.channel.stop_consuming()
 
     def signalQuit(self,signum, frame):
         self.channel.stop_consuming(queueName)
+        self.channel.stop_consuming(periodQueueName)
 
 
 

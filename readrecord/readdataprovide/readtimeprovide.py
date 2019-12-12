@@ -32,7 +32,7 @@ def getTotleReadWordTime(serialID):
     try:
         list = readprogress.objects.filter(serial=serialID)\
             .aggregate(timeCount=Sum('readTime'),wordCount=Sum('wordCount'))
-        print ("totle:",list)
+        #print ("totle:",list)
     except:
         print ('getTotleReadWordTime faile of select data from table!!!!!')
         resultCode = '1028'
@@ -52,7 +52,7 @@ def getTodayReadWordTime(serialID):
     try:
         list = readprogress.objects.filter(serial=serialID,startTime=timeStamp)\
             .aggregate(timeCount=Sum('readTime'),wordCount=Sum('wordCount'))
-        print ("today:",list,"timeStamp:",timeStamp)
+        # print ("today:",list,"timeStamp:",timeStamp)
     except:
         print ('getTotleReadWordTime faile of select data from table!!!!!')
         resultCode = '1028'
@@ -66,7 +66,6 @@ def getWeekReadWordTime(serialID):
 
     today = datetime.date.today()
     thisWeek = today - datetime.timedelta(days=today.weekday())
-    print (thisWeek)
     timeNow = datetime.datetime.now()
     timeNow = timeNow.replace(year=thisWeek.year,month=thisWeek.month,day=thisWeek.day)
     timeStr = timeNow.strftime('%Y-%m-%d')
@@ -76,7 +75,7 @@ def getWeekReadWordTime(serialID):
     try:
         list = readprogress.objects.filter(serial=serialID,startTime__gte=timeStamp)\
             .aggregate(timeCount=Sum('readTime'),wordCount=Sum('wordCount'))
-        print ("week:", list, "timeStamp:", timeStamp)
+        #print ("week:", list, "timeStamp:", timeStamp)
     except:
         print ('getTotleReadWordTime faile of select data from table!!!!!')
         resultCode = '1028'
@@ -97,7 +96,7 @@ def getMonthReadWordTime(serialID):
     try:
         list = readprogress.objects.filter(serial=serialID,startTime__gte=timeStamp)\
             .aggregate(timeCount=Sum('readTime'),wordCount=Sum('wordCount'))
-        print ("month:", list, "timeStamp:", timeStamp)
+        #print ("month:", list, "timeStamp:", timeStamp)
     except:
         print ('getTotleReadWordTime faile of select data from table!!!!!')
         resultCode = '1028'
@@ -118,7 +117,7 @@ def getYearReadWordTime(serialID):
     try:
         list = readprogress.objects.filter(serial=serialID,startTime__gte=timeStamp)\
             .aggregate(timeCount=Sum('readTime'),wordCount=Sum('wordCount'))
-        print ("year:", list, "timeStamp:", timeStamp)
+        # print ("year:", list, "timeStamp:", timeStamp)
     except:
         print ('getTotleReadWordTime faile of select data from table!!!!!')
         resultCode = '1028'

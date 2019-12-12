@@ -87,3 +87,23 @@ class bookreaddata(models.Model):
         db_table = 'bookreaddata'
         verbose_name = '每本书阅读数据'
         verbose_name_plural = verbose_name
+
+
+class timeperioddata(models.Model):
+    serial = models.CharField(max_length=20, db_index=True)
+    todayword = models.IntegerField(default=0)
+    todaytime = models.IntegerField(default=0)
+    weekword = models.IntegerField(default=0)
+    weektime = models.IntegerField(default=0)
+    monthword = models.IntegerField(default=0)
+    monthtime = models.IntegerField(default=0)
+    yearword = models.BigIntegerField(default=0)
+    yeartime = models.BigIntegerField(default=0)
+    totleword = models.BigIntegerField(default=0)
+    totletime = models.BigIntegerField(default=0)
+
+    class Meta:
+        app_label = 'readrecord'
+        db_table = 'timeperioddata'
+        verbose_name = '分时间段阅读数据'
+        verbose_name_plural = verbose_name
