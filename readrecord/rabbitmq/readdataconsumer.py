@@ -145,12 +145,36 @@ class ReadDataConsumer:
             saveObject.weektime = 0
         else:
             saveObject.weektime = weekdateList['timeCount']
-        saveObject.monthword = monthdateList['wordCount']
-        saveObject.monthtime = monthdateList['timeCount']
-        saveObject.yearword = yeardateList['wordCount']
-        saveObject.yeartime = yeardateList['timeCount']
-        saveObject.totleword = totledateList['wordCount']
-        saveObject.totletime = totledateList['timeCount']
+
+        if monthdateList['wordCount'] == None:
+            saveObject.monthword = 0
+        else:
+            saveObject.monthword = monthdateList['wordCount']
+
+        if monthdateList['timeCount'] == None:
+            saveObject.monthtime = 0
+        else:
+            saveObject.monthtime = monthdateList['timeCount']
+
+        if yeardateList['wordCount'] == None:
+            saveObject.yearword = 0
+        else:
+            saveObject.yearword = yeardateList['wordCount']
+
+        if yeardateList['timeCount'] == None:
+            saveObject.yeartime = 0
+        else:
+            saveObject.yeartime = yeardateList['timeCount']
+
+        if totledateList['wordCount'] == None:
+            saveObject.totleword = 0
+        else:
+            saveObject.totleword = totledateList['wordCount']
+
+        if totledateList['timeCount'] == None:
+            saveObject.totletime = 0
+        else:
+            saveObject.totletime = totledateList['timeCount']
 
         saveObject.serial = dict['serial']
         saveObject.save()
