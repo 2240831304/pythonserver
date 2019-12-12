@@ -10,6 +10,7 @@ import time
 
 
 from readrecord.models import readprogress
+from readrecord.models import timeperioddata
 
 
 def getReadDateList(serialID):
@@ -123,6 +124,20 @@ def getYearReadWordTime(serialID):
         resultCode = '1028'
 
     return resultCode,list
+
+
+
+def getTimePeriodData(serialID):
+    resultCode = '0'
+
+    try:
+        Object = timeperioddata.objects.get(serial=serialID)
+    except :
+        print ('getTimePeriodData faile when select data from table of timeperioddata!!!!!')
+        resultCode = '1028'
+        Object = None
+
+    return resultCode,Object
 
 
 

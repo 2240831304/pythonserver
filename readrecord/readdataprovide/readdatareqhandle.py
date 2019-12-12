@@ -311,3 +311,53 @@ def AddBookNode(doc, node, data):
     bookNode.appendChild(readProgressNode)
 
     node.appendChild(bookNode)
+
+
+
+#get time period read times,words from table of timeperioddata
+def Handle_TimePeriodData_Get(request):
+    print ('Handle_TimePeriodData_Get: get data from table of timeperioddata')
+    serialid = request.META.get('HTTP_SERIAL', '')
+    resultCode = '0'
+    returnXmlData = ''
+
+    if serialid == '':
+        resultCode = '1018'
+        return resultCode,returnXmlData
+
+    doc = Document()
+    root = doc.createElement('Response')
+    doc.appendChild(root)
+    stateNode = doc.createElement('GetReadWordTimeReq')
+    root.appendChild(stateNode)
+
+    resultCode,dataObject = readtimeprovide.getTimePeriodData(serialid)
+
+    if dataObject == None:
+        return resultCode, returnXmlData
+    else:
+        AddTimePeriodNode(doc,stateNode,'Today',dataObject.todaytime,dataObject.todayword)
+        AddTimePeriodNode(doc,stateNode,'Week',dataObject.weektime,dataObject.weekword)
+        AddTimePeriodNode(doc,stateNode,'Month',dataObject.monthtime,dataObject.monthword)
+        AddTimePeriodNode(doc,stateNode,'Year',dataObject.yeartime,dataObject.yearword)
+        AddTimePeriodNode(doc,stateNode,'Totle',dataObject.totletime,dataObject.totleword)
+
+    returnxmlData = doc.toxml('UTF-8')
+
+    return resultCode,returnxmlData
+
+
+def AddTimePeriodNode(doc,node,nodename,timenum,wordnum):
+    readWordsNode = doc.createElement('ReadWord')
+    readWordsText = doc.createTextNode(str(wordnum))
+    readWordsNode.appendChild(readWordsText)
+
+    readTimesNode = doc.createElement('ReadTime')
+    readTimesText = doc.createTextNode(str(timenum))
+    readTimesNode.appendChild(readTimesText)
+
+    timePeriodNode = doc.createElement(nodename)
+    timePeriodNode.appendChild(readWordsNode)
+    timePeriodNode.appendChild(readTimesNode)
+
+    node.appendChild(timePeriodNode)
