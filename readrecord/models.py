@@ -80,6 +80,11 @@ class bookreaddata(models.Model):
     pagecount = models.IntegerField(default=0)
     daycount = models.IntegerField(default=0)
     notecount = models.IntegerField(default=0)
+    readdate = models.BigIntegerField(default=0,db_index=True)
+    dayreadtime = models.IntegerField(default=0)
+    dayreadword = models.IntegerField(default=0)
+    dayprogress = models.IntegerField(default=0)
+    state = models.BooleanField(default=False)
 
 
     class Meta:

@@ -34,6 +34,6 @@ class ReadRequest:
 if __name__ == '__main__':
     testObject = ReadRequest()
 
-    # testObject.getEveryBookReadData()
+    testObject.getEveryBookReadData()
     # testObject.getPeriodReadWordTime()
-    testObject.getReadDateBookList()
+    # testObject.getReadDateBookList()

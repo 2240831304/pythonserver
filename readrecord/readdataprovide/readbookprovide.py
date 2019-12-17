@@ -28,10 +28,16 @@ def getBookReadDataList(serialID):
 
 
 def getReadDataList(serialID):
-    list = bookreaddata.objects.values("bookName","bookId","wordcount","timecount","maxprogress").filter(serial=serialID)
+    list = bookreaddata.objects.values("bookName","bookId","wordcount","timecount","maxprogress",
+                                       "readdate","dayreadtime","dayprogress","dayreadword")\
+        .filter(serial=serialID,state=1)
 
     # print (list)
     return list
+
+def updateState(serialID):
+    bookreaddata.objects.filter(serial=serialID,state=1).update(state=False)
+
 
 if __name__ == '__main__':
     getBookReadDataList('234234231234455')

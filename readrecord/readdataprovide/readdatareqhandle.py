@@ -278,6 +278,7 @@ def Hand_EveryBookReadData_Get(request):
     else:
         return resultCode, returnXmlData
 
+    readbookprovide.updateState(serialid)
     returnXmlData = doc.toxml('UTF-8')
     return resultCode, returnXmlData
 
@@ -303,12 +304,32 @@ def AddBookNode(doc, node, data):
     readProgressText = doc.createTextNode(str(data['maxprogress']))
     readProgressNode.appendChild(readProgressText)
 
+    readDateNode = doc.createElement("ReadDate")
+    readDateText = doc.createTextNode(str(data['readdate']))
+    readDateNode.appendChild(readDateText)
+
+    dayReadTimeNode = doc.createElement("DayReadTime")
+    dayReadTimeText = doc.createTextNode(str(data['dayreadtime']))
+    dayReadTimeNode.appendChild(dayReadTimeText)
+
+    dayReadWordNode = doc.createElement("DayReadWord")
+    dayReadWordText = doc.createTextNode(str(data['dayreadword']))
+    dayReadWordNode.appendChild(dayReadWordText)
+
+    dayProgressNode = doc.createElement("DayProgress")
+    dayProgressText = doc.createTextNode(str(data['dayprogress']))
+    dayProgressNode.appendChild(dayProgressText)
+
     bookNode = doc.createElement("Book")
     bookNode.appendChild(bookNameNode)
     bookNode.appendChild(bookIdNode)
     bookNode.appendChild(readTimeNode)
     bookNode.appendChild(readWordNode)
     bookNode.appendChild(readProgressNode)
+    bookNode.appendChild(readDateNode)
+    bookNode.appendChild(dayReadTimeNode)
+    bookNode.appendChild(dayReadWordNode)
+    bookNode.appendChild(dayProgressNode)
 
     node.appendChild(bookNode)
 

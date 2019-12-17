@@ -68,9 +68,9 @@ class ReadDataConsumer:
             self.channel.queue_bind(exchange=exchangeName, queue=queueName, routing_key=rountingKey)
             self.channel.basic_consume(queueName, self.callback, consumer_tag="hello-consumer")
 
-            self.channel.queue_declare(queue=periodQueueName, durable=True)
-            self.channel.queue_bind(exchange=exchangeName, queue=periodQueueName, routing_key=rountingKey)
-            self.channel.basic_consume(periodQueueName, self.perioddatacallback, consumer_tag="consumer")
+            # self.channel.queue_declare(queue=periodQueueName, durable=True)
+            # self.channel.queue_bind(exchange=exchangeName, queue=periodQueueName, routing_key=rountingKey)
+            # self.channel.basic_consume(periodQueueName, self.perioddatacallback, consumer_tag="consumer")
 
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
@@ -91,21 +91,38 @@ class ReadDataConsumer:
 
     def callback(self,ch, method, properties, body):
         dict = json.loads(body)
-        # print ("ReadDataConsumer callback ,,callback======%r" % dict)
-        bookIndfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId']) \
+        print ("ReadDataConsumer callback ,,callback======%r" % dict)
+        bookInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId']) \
             .aggregate(progressMax=Max('progress'), timeCount=Sum('readTime'), wordCount=Sum('wordCount'))
 
         try:
-            saveObject = bookreaddata.objects.get(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId'])
+            saveObject = bookreaddata.objects.get(serial=dict['serial'], bookName=dict['bookName'], readdate=dict['readDate'])
+            saveObject.dayreadtime = saveObject.dayreadtime + dict['readTime']
+            saveObject.dayreadword = saveObject.dayreadword + dict['readWord']
         except bookreaddata.DoesNotExist:
             saveObject = bookreaddata()
+            saveObject.dayreadtime = dict['readTime']
+            saveObject.dayreadword = dict['readWord']
+
+        '''
+        try:
+            progressInfo = bookreaddata.objects.filter(serial=dict['serial'], bookName=dict['bookName'],
+                                                    readdate_lt=dict['readDate']) \
+                .aggregate(progressMax=Max('maxprogress'))
+
+            saveObject.dayprogress = bookInfo['progressMax'] - progressInfo['progressMax']
+        except bookreaddata.DoesNotExist:
+            saveObject.dayprogress = bookInfo['progressMax']
+        '''
 
         saveObject.serial = dict['serial']
         saveObject.bookName = dict['bookName']
         saveObject.bookId = dict['bookId']
-        saveObject.wordcount = bookIndfo['wordCount']
-        saveObject.timecount = bookIndfo['timeCount']
-        saveObject.maxprogress = bookIndfo['progressMax']
+        saveObject.readdate = dict['readDate']
+        saveObject.wordcount = bookInfo['wordCount']
+        saveObject.timecount = bookInfo['timeCount']
+        saveObject.maxprogress = bookInfo['progressMax']
+        saveObject.state = True
 
         saveObject.save()
 
@@ -187,7 +204,7 @@ class ReadDataConsumer:
 
     def signalQuit(self,signum, frame):
         self.channel.stop_consuming(queueName)
-        self.channel.stop_consuming(periodQueueName)
+        # self.channel.stop_consuming(periodQueueName)
 
 
 
