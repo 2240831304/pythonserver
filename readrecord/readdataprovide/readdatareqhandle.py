@@ -316,9 +316,17 @@ def AddBookNode(doc, node, data):
     dayReadWordText = doc.createTextNode(str(data['dayreadword']))
     dayReadWordNode.appendChild(dayReadWordText)
 
-    dayProgressNode = doc.createElement("DayProgress")
-    dayProgressText = doc.createTextNode(str(data['dayprogress']))
-    dayProgressNode.appendChild(dayProgressText)
+    dayReadProgressNode = doc.createElement("DayReadProgress")
+    dayReadProgressText = doc.createTextNode(str(data['dayreadprogress']))
+    dayReadProgressNode.appendChild(dayReadProgressText)
+
+    dayMaxProgressNode = doc.createElement("DayMaxProgress")
+    dayMaxProgressTetx = doc.createTextNode(str(data['daymaxprogress']))
+    dayMaxProgressNode.appendChild(dayMaxProgressTetx)
+
+    dayMinProgressNode = doc.createElement("DayMinProgress")
+    dayMinProgressText = doc.createTextNode(str(data['dayminprogress']))
+    dayMinProgressNode.appendChild(dayMinProgressText)
 
     bookNode = doc.createElement("Book")
     bookNode.appendChild(bookNameNode)
@@ -329,7 +337,9 @@ def AddBookNode(doc, node, data):
     bookNode.appendChild(readDateNode)
     bookNode.appendChild(dayReadTimeNode)
     bookNode.appendChild(dayReadWordNode)
-    bookNode.appendChild(dayProgressNode)
+    bookNode.appendChild(dayReadProgressNode)
+    bookNode.appendChild(dayMaxProgressNode)
+    bookNode.appendChild(dayMinProgressNode)
 
     node.appendChild(bookNode)
 

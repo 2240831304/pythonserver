@@ -2,8 +2,13 @@
 
 import os
 import django
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(BASE_DIR)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','jiekou.settings')
 django.setup()
+
 from django.db.models import Sum,Max
 
 from readrecord.models import readprogress,recentbooklist,bookreaddata
@@ -28,8 +33,8 @@ def getBookReadDataList(serialID):
 
 
 def getReadDataList(serialID):
-    list = bookreaddata.objects.values("bookName","bookId","wordcount","timecount","maxprogress",
-                                       "readdate","dayreadtime","dayprogress","dayreadword")\
+    list = bookreaddata.objects.values("bookName","bookId","wordcount","timecount","maxprogress","readdate",
+                                       "dayreadtime","dayreadword","dayreadprogress","daymaxprogress","dayminprogress")\
         .filter(serial=serialID,state=1)
 
     # print (list)

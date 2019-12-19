@@ -2,14 +2,17 @@
 
 import os
 import django
-#import jiekou
+import sys
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(BASE_DIR)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','jiekou.settings')
 django.setup()
 
 import pika
 import json
 from readrecord.models import readprogress,bookreaddata,timeperioddata
-from django.db.models import Sum,Max
+from django.db.models import Sum,Max,Min
 # from multiprocessing import Process
 from readrecord.readdataprovide import readtimeprovide
 
@@ -91,7 +94,7 @@ class ReadDataConsumer:
 
     def callback(self,ch, method, properties, body):
         dict = json.loads(body)
-        print ("ReadDataConsumer callback ,,callback======%r" % dict)
+        # print ("ReadDataConsumer callback ,,callback======%r" % dict)
         bookInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId']) \
             .aggregate(progressMax=Max('progress'), timeCount=Sum('readTime'), wordCount=Sum('wordCount'))
 
@@ -104,16 +107,12 @@ class ReadDataConsumer:
             saveObject.dayreadtime = dict['readTime']
             saveObject.dayreadword = dict['readWord']
 
-        '''
-        try:
-            progressInfo = bookreaddata.objects.filter(serial=dict['serial'], bookName=dict['bookName'],
-                                                    readdate_lt=dict['readDate']) \
-                .aggregate(progressMax=Max('maxprogress'))
+        progressInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], startTime=dict['readDate'])\
+            .aggregate(progressMax=Max('progress'), progressMin=Min('dayminprogress'))
+        saveObject.daymaxprogress = progressInfo['progressMax']
+        saveObject.dayminprogress = progressInfo['progressMin']
 
-            saveObject.dayprogress = bookInfo['progressMax'] - progressInfo['progressMax']
-        except bookreaddata.DoesNotExist:
-            saveObject.dayprogress = bookInfo['progressMax']
-        '''
+        saveObject.dayreadprogress = saveObject.daymaxprogress - saveObject.dayminprogress
 
         saveObject.serial = dict['serial']
         saveObject.bookName = dict['bookName']
@@ -200,12 +199,11 @@ class ReadDataConsumer:
 
 
     def quit(self):
-        self.channel.stop_consuming()
+        self.channel.stop_consuming(queueName)
 
     def signalQuit(self,signum, frame):
         self.channel.stop_consuming(queueName)
         # self.channel.stop_consuming(periodQueueName)
-
 
 
 if __name__ == '__main__':

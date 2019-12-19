@@ -17,6 +17,7 @@ class ReadProgressData:
         self.endTime = 0
         self.wordCount = 0
         self.pageCount = 0
+        self.dayminprogress = 0
 
     def clear(self):
         self.serial = ''
@@ -29,6 +30,7 @@ class ReadProgressData:
         self.endTime = 0
         self.wordCount = 0
         self.pageCount = 0
+        self.dayminprogress = 0
 
 
 
@@ -64,8 +66,11 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
                 self.dataItem = ReadProgressData()
                 self.setBookInfo()
 
+
             if self.dataItem.progress < self.dataObject.progress:
                 self.dataItem.progress = self.dataObject.progress
+            elif self.dataItem.dayminprogress > self.dataObject.progress:
+                self.dataItem.dayminprogress = self.dataObject.progress
             #self.dataItem.startTime = self.dataObject.startTime
             self.dataItem.startTime = int(time.mktime(timeArray))
             self.dataItem.endTime = self.dataObject.endTime
@@ -83,6 +88,8 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
         self.dataItem.serial = self.serial
         timeTemp = time.localtime(int(self.dataObject.endTime))
         self.comDate = time.strftime("%Y-%m-%d", timeTemp)
+        self.dataItem.dayminprogress = self.dataObject.progress
+        self.dataItem.progress = self.dataObject.progress
 
 
     '''
@@ -104,7 +111,7 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
         elif self.CurrentData == "bookId":
             self.dataObject.bookId = content
         elif self.CurrentData == "progress":
-            self.dataObject.progress = content
+            self.dataObject.progress = int(content)
         elif self.CurrentData == "readTime":
             self.dataObject.readTime = int(content)
         elif self.CurrentData == "readCount":

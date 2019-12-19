@@ -27,6 +27,7 @@ def saveReadData(dataList):
         saveReadProgressData.endTime = data.endTime
         saveReadProgressData.wordCount = data.wordCount
         saveReadProgressData.pageCount = data.pageCount
+        saveReadProgressData.dayminprogress = data.dayminprogress
         product_list_to_insert.append(saveReadProgressData)
 
     try:

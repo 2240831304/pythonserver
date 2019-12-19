@@ -16,6 +16,7 @@ class readprogress(models.Model):
     endTime = models.BigIntegerField()
     wordCount = models.IntegerField()
     pageCount = models.IntegerField()
+    dayminprogress = models.IntegerField(default=0)
 
     class Meta:
         app_label = 'readrecord'
@@ -78,12 +79,13 @@ class bookreaddata(models.Model):
     timecount = models.IntegerField(default=0)
     maxprogress = models.IntegerField(default=0)
     pagecount = models.IntegerField(default=0)
-    daycount = models.IntegerField(default=0)
     notecount = models.IntegerField(default=0)
     readdate = models.BigIntegerField(default=0,db_index=True)
     dayreadtime = models.IntegerField(default=0)
     dayreadword = models.IntegerField(default=0)
-    dayprogress = models.IntegerField(default=0)
+    dayreadprogress = models.IntegerField(default=0)
+    daymaxprogress = models.IntegerField(default=0)
+    dayminprogress = models.IntegerField(default=0)
     state = models.BooleanField(default=False)
 
 
