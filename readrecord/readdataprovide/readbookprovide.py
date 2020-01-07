@@ -44,6 +44,29 @@ def updateState(serialID):
     bookreaddata.objects.filter(serial=serialID,state=1).update(state=False)
 
 
+
+def getAllReadProgress(serialid,minRecord,maxRecord):
+    list = bookreaddata.objects.values("bookName", "bookId", "wordcount", "timecount", "maxprogress", "readdate")\
+        .filter(serial=serialid,record__gt=minRecord,record__lt=maxRecord)
+
+    return list
+
+
+def getLoseReadProgress(serialid,minTime,minRecord,maxRecord):
+    list = bookreaddata.objects.values("bookName", "bookId", "wordcount", "timecount", "maxprogress", "readdate")\
+        .filter(serial=serialid,record__gt=minRecord,record__lt=maxRecord,readdate__lt=minTime)
+
+    return list
+
+
+def getMaxRecord(serialID):
+    try:
+        recordInfo = bookreaddata.objects.filter(serial=serialID).aggregate(maxRecord=Max('record'))
+        return recordInfo['maxRecord']
+    except:
+        return 1
+
+
 if __name__ == '__main__':
     getBookReadDataList('234234231234455')
     getReadDataList('OF6IC31811B00030')

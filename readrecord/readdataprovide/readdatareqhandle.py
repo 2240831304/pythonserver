@@ -392,3 +392,80 @@ def AddTimePeriodNode(doc,node,nodename,timenum,wordnum):
     timePeriodNode.appendChild(readTimesNode)
 
     node.appendChild(timePeriodNode)
+
+
+
+def Hand_ReadProgress_Get(request):
+    serialid = request.META.get('HTTP_SERIAL', '')
+    localminreadtime = int(request.META.get('HTTP_MINTIME', ''))
+    requestnum = int(request.META.get('HTTP_REQUESTNUM', ''))
+
+    resultCode = '0'
+    returnXmlData = ''
+
+    if serialid == '':
+        resultCode = '1018'
+        return resultCode,returnXmlData
+
+    minRecord = (requestnum - 1) * 3
+    maxRecord = requestnum * 3 + 1
+
+    maxRecordtemp =  readbookprovide.getMaxRecord(serialid)
+    if (maxRecordtemp >= maxRecord) :
+        resultCode = '1'
+
+    if localminreadtime == 0:
+        bookList = readbookprovide.getAllReadProgress(serialid,minRecord,maxRecord)
+    else:
+        bookList = readbookprovide.getLoseReadProgress(serialid,localminreadtime,minRecord,maxRecord)
+
+    if bookList:
+        doc = Document()
+        root = doc.createElement('Response')
+        doc.appendChild(root)
+        bookListNode = doc.createElement('GetReadProgress')
+        root.appendChild(bookListNode)
+
+        for value in bookList:
+            AddReadBookNode(doc,bookListNode,value)
+    else:
+        return resultCode, returnXmlData
+
+    returnXmlData = doc.toxml('UTF-8')
+    return resultCode, returnXmlData
+
+
+def AddReadBookNode(doc, node, data):
+    bookNameNode = doc.createElement("BookName")
+    bookNameText = doc.createTextNode(str(data['bookName']))
+    bookNameNode.appendChild(bookNameText)
+
+    bookIdNode = doc.createElement("BookId")
+    bookIdText = doc.createTextNode(str(data['bookId']))
+    bookIdNode.appendChild(bookIdText)
+
+    readTimeNode = doc.createElement("ReadTime")
+    readTimeText = doc.createTextNode(str(data['timecount']))
+    readTimeNode.appendChild(readTimeText)
+
+    readWordNode = doc.createElement("ReadWord")
+    readWordText = doc.createTextNode(str(data['wordcount']))
+    readWordNode.appendChild(readWordText)
+
+    readProgressNode = doc.createElement("ReadProgress")
+    readProgressText = doc.createTextNode(str(data['maxprogress']))
+    readProgressNode.appendChild(readProgressText)
+
+    readDateNode = doc.createElement("ReadDate")
+    readDateText = doc.createTextNode(str(data['readdate']))
+    readDateNode.appendChild(readDateText)
+
+    bookNode = doc.createElement("Book")
+    bookNode.appendChild(bookNameNode)
+    bookNode.appendChild(bookIdNode)
+    bookNode.appendChild(readTimeNode)
+    bookNode.appendChild(readWordNode)
+    bookNode.appendChild(readProgressNode)
+    bookNode.appendChild(readDateNode)
+
+    node.appendChild(bookNode)

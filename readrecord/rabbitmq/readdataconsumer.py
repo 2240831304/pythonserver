@@ -107,6 +107,12 @@ class ReadDataConsumer:
             saveObject.dayreadtime = dict['readTime']
             saveObject.dayreadword = dict['readWord']
 
+            try:
+                recordInfo = bookreaddata.objects.filter(serial=dict['serial']).aggregate(maxRecord=Max('record'))
+                saveObject.record = recordInfo['maxRecord'] + 1
+            except:
+                saveObject.record = 1
+
         progressInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], startTime=dict['readDate'])\
             .aggregate(progressMax=Max('progress'), progressMin=Min('dayminprogress'))
         saveObject.daymaxprogress = progressInfo['progressMax']

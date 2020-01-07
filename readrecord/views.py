@@ -45,6 +45,8 @@ def handle_readrecord_request(request):
         elif requestAction == 'getBookDataList':
             # resultCode, returnXmlData = readdatareqhandle.Hand_EveryBookData_Get(request)
             resultCode, returnXmlData = readdatareqhandle.Hand_EveryBookReadData_Get(request)
+        elif requestAction == 'getReadProgress':
+            resultCode, returnXmlData = readdatareqhandle.Hand_ReadProgress_Get(request)
 
         response = HttpResponse()
         response.setdefault('result-code',resultCode)

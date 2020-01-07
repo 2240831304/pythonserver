@@ -87,6 +87,7 @@ class bookreaddata(models.Model):
     daymaxprogress = models.IntegerField(default=0)
     dayminprogress = models.IntegerField(default=0)
     state = models.BooleanField(default=False)
+    record = models.IntegerField(default=0)
 
 
     class Meta:
