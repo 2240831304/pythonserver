@@ -407,8 +407,8 @@ def Hand_ReadProgress_Get(request):
         resultCode = '1018'
         return resultCode,returnXmlData
 
-    minRecord = (requestnum - 1) * 3
-    maxRecord = requestnum * 3 + 1
+    minRecord = (requestnum - 1) * 150
+    maxRecord = requestnum * 150 + 1
 
     maxRecordtemp =  readbookprovide.getMaxRecord(serialid)
     if (maxRecordtemp >= maxRecord) :

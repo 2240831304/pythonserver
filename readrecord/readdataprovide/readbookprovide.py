@@ -67,6 +67,22 @@ def getMaxRecord(serialID):
         return 1
 
 
+def insertTestData():
+    for num in range(1,205):
+        object = bookreaddata()
+        object.serial = "234234231234455"
+        object.bookName = "fengyu.txt"
+        object.bookId = 2334
+        object.wordcount = 344
+        object.timecount = 788
+        object.maxprogress = 786
+        object.readdate = 1546827949
+        object.record = num
+
+        object.save()
+
+
 if __name__ == '__main__':
-    getBookReadDataList('234234231234455')
-    getReadDataList('OF6IC31811B00030')
+    #getBookReadDataList('234234231234455')
+    #getReadDataList('OF6IC31811B00030')
+    insertTestData()
