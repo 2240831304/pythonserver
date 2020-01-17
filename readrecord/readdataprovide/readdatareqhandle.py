@@ -445,11 +445,11 @@ def AddReadBookNode(doc, node, data):
     bookIdNode.appendChild(bookIdText)
 
     readTimeNode = doc.createElement("ReadTime")
-    readTimeText = doc.createTextNode(str(data['timecount']))
+    readTimeText = doc.createTextNode(str(data['dayreadtime']))
     readTimeNode.appendChild(readTimeText)
 
     readWordNode = doc.createElement("ReadWord")
-    readWordText = doc.createTextNode(str(data['wordcount']))
+    readWordText = doc.createTextNode(str(data['dayreadword']))
     readWordNode.appendChild(readWordText)
 
     readProgressNode = doc.createElement("ReadProgress")
