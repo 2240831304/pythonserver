@@ -95,8 +95,6 @@ class ReadDataConsumer:
     def callback(self,ch, method, properties, body):
         dict = json.loads(body)
         # print ("ReadDataConsumer callback ,,callback======%r" % dict)
-        #bookInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId']) \
-        #    .aggregate(progressMax=Max('progress'), timeCount=Sum('readTime'), wordCount=Sum('wordCount'))
 
         bookInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId']) \
            .aggregate(progressMax=Max('progress'))
@@ -116,18 +114,10 @@ class ReadDataConsumer:
             except:
                 saveObject.record = 1
 
-        #progressInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], startTime=dict['readDate'])\
-        #    .aggregate(progressMax=Max('progress'), progressMin=Min('dayminprogress'))
-        #saveObject.daymaxprogress = progressInfo['progressMax']
-        #saveObject.dayminprogress = progressInfo['progressMin']
-        #saveObject.dayreadprogress = saveObject.daymaxprogress - saveObject.dayminprogress
-
         saveObject.serial = dict['serial']
         saveObject.bookName = dict['bookName']
         saveObject.bookId = dict['bookId']
         saveObject.readdate = dict['readDate']
-        #saveObject.wordcount = bookInfo['wordCount']
-        #saveObject.timecount = bookInfo['timeCount']
         saveObject.wordcount = 0
         saveObject.timecount = 0
         saveObject.maxprogress = bookInfo['progressMax']
