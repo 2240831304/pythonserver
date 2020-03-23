@@ -118,8 +118,6 @@ class ReadDataConsumer:
         saveObject.bookName = dict['bookName']
         saveObject.bookId = dict['bookId']
         saveObject.readdate = dict['readDate']
-        saveObject.wordcount = 0
-        saveObject.timecount = 0
         saveObject.maxprogress = bookInfo['progressMax']
         saveObject.state = True
 

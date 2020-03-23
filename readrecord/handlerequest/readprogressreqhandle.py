@@ -28,12 +28,11 @@ def Handle_Readprogress_Post(request):
         xml.sax.parseString(bodyData, Handler)
         tempData = Handler.getParseData()
         resultCode = readprogresstable.saveReadData(tempData)
+        addQueueTask(tempData)
     except:
         print ("Handle_Readprogress_Post parse data,or save data to database Peanut error!!!")
         resultCode = '1028'
         traceback.print_exc()
-
-    addQueueTask(tempData)
 
     return resultCode
 
