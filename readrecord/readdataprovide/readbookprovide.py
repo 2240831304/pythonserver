@@ -46,15 +46,15 @@ def updateState(serialID):
 
 
 def getAllReadProgress(serialid,minRecord,maxRecord):
-    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", "readdate")\
+    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", "readdate","record")\
         .filter(serial=serialid,record__gt=minRecord,record__lt=maxRecord)
 
     return list
 
 
 def getLoseReadProgress(serialid,minTime,minRecord,maxRecord):
-    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", "readdate")\
-        .filter(serial=serialid,record__gt=minRecord,record__lt=maxRecord,readdate__lt=minTime)
+    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", "readdate","record")\
+        .filter(serial=serialid,record__gt=minRecord,record__lt=maxRecord,endreadtime__lt=minTime)
 
     return list
 

@@ -73,14 +73,14 @@ class recentbooklist(models.Model):
 
 class bookreaddata(models.Model):
     serial = models.CharField(max_length=20, db_index=True)
-    bookName = models.CharField(max_length=100)
+    bookName = models.CharField(max_length=100, db_index=True)
     bookId = models.IntegerField()
     #wordcount = models.IntegerField(default=0)
     #timecount = models.IntegerField(default=0)
     maxprogress = models.IntegerField(default=0)
     pagecount = models.IntegerField(default=0)
     #notecount = models.IntegerField(default=0)
-    readdate = models.BigIntegerField(default=0,db_index=True)
+    readdate = models.BigIntegerField(default=0)
     dayreadtime = models.IntegerField(default=0)
     dayreadword = models.IntegerField(default=0)
     #dayreadprogress = models.IntegerField(default=0)
@@ -88,6 +88,7 @@ class bookreaddata(models.Model):
     #dayminprogress = models.IntegerField(default=0)
     state = models.BooleanField(default=False)
     record = models.IntegerField(default=0)
+    endreadtime = models.BigIntegerField(default=0,db_index=True)
 
 
     class Meta:

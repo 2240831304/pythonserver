@@ -407,8 +407,8 @@ def Hand_ReadProgress_Get(request):
         resultCode = '1018'
         return resultCode,returnXmlData
 
-    minRecord = (requestnum - 1) * 150
-    maxRecord = requestnum * 150 + 1
+    minRecord = requestnum
+    maxRecord = requestnum + 151
 
     maxRecordtemp =  readbookprovide.getMaxRecord(serialid)
     if (maxRecordtemp >= maxRecord) :
@@ -429,6 +429,7 @@ def Hand_ReadProgress_Get(request):
         for value in bookList:
             AddReadBookNode(doc,bookListNode,value)
     else:
+        resultCode = '0'
         return resultCode, returnXmlData
 
     returnXmlData = doc.toxml('UTF-8')
@@ -460,6 +461,10 @@ def AddReadBookNode(doc, node, data):
     readDateText = doc.createTextNode(str(data['readdate']))
     readDateNode.appendChild(readDateText)
 
+    recordNode = doc.createElement("Record")
+    recordText = doc.createTextNode(str(data['record']))
+    recordNode.appendChild(recordText)
+
     bookNode = doc.createElement("Book")
     bookNode.appendChild(bookNameNode)
     bookNode.appendChild(bookIdNode)
@@ -467,5 +472,6 @@ def AddReadBookNode(doc, node, data):
     bookNode.appendChild(readWordNode)
     bookNode.appendChild(readProgressNode)
     bookNode.appendChild(readDateNode)
+    bookNode.appendChild(recordNode)
 
     node.appendChild(bookNode)

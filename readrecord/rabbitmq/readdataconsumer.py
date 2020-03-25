@@ -120,6 +120,7 @@ class ReadDataConsumer:
         saveObject.readdate = dict['readDate']
         saveObject.maxprogress = bookInfo['progressMax']
         saveObject.state = True
+        saveObject.endreadtime = dict["endreadtime"]
 
         saveObject.save()
 

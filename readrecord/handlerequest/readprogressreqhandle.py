@@ -50,6 +50,7 @@ def addQueueTask(tasklist):
             dict["readDate"] = task.startTime
             dict["readTime"] = task.readTime
             dict["readWord"] = task.wordCount
+            dict["endreadtime"] = task.endTime
             producer.addTask(json.dumps(dict))
 
     producer.quit()
