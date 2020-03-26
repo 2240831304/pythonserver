@@ -26,12 +26,23 @@ def Handle_Readprogress_Post(request):
         Handler = readprogressdataparse.ReadProgressHandler()
         Handler.setSerial(serial)
         xml.sax.parseString(bodyData, Handler)
+
+        if (Handler.getTotalCount() == 0):
+            return resultCode
+
         tempData = Handler.getParseData()
         resultCode = readprogresstable.saveReadData(tempData)
-        addQueueTask(tempData)
+
     except:
         print ("Handle_Readprogress_Post parse data,or save data to database Peanut error!!!")
-        resultCode = '1028'
+        resultCode = ''
+        traceback.print_exc()
+
+    try:
+        addQueueTask(tempData)
+    except:
+        print ("read data add rabbitmq failed!!!!!")
+        resultCode = ''
         traceback.print_exc()
 
     return resultCode

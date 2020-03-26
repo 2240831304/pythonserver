@@ -42,6 +42,7 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
         self.dataList = list()
         self.dataItem = ReadProgressData()
         self.comDate = ""
+        self.totalCount = 0
 
     def startElement(self, tag, attributes):
         if tag == 'readProgress':
@@ -124,9 +125,14 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
             self.dataObject.wordCount = int(content)
         elif self.CurrentData == "pageCount":
             self.dataObject.pageCount = int(content)
+        elif self.CurrentData == "totalCount":
+            self.totalCount = int(content)
 
     def setSerial(self, sn):
         self.serial = sn
 
     def getParseData(self):
         return self.dataList
+
+    def getTotalCount(self):
+        return self.totalCount
