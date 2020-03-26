@@ -2,7 +2,7 @@
 
 import xml.sax
 import xml.sax.handler
-from readrecord.handlerequest import readprogressdataparse
+from readrecord.handlerequest import readprogressparse
 from readrecord.operatedatabase import readprogresstable
 import traceback
 
@@ -23,7 +23,7 @@ def Handle_Readprogress_Post(request):
 
     try:
         # 重写 ContextHandler
-        Handler = readprogressdataparse.ReadProgressHandler()
+        Handler = readprogressparse.ReadProgressParse()
         Handler.setSerial(serial)
         xml.sax.parseString(bodyData, Handler)
 
