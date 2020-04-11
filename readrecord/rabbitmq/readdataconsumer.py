@@ -35,16 +35,6 @@ class ReadDataConsumer:
         self.startConsumer()
 
 
-    '''
-    def run(self):
-        flag = self.connect_mq()
-        if flag:
-            self.startConsumer()
-        else:
-            print ("ReadDataConsumer create read data consumer is faile!!!!!!")
-    '''
-
-
     def connect_mq(self):
         credentials = pika.PlainCredentials(username='guest', password='guest')
         parameters = pika.ConnectionParameters(host=hostname, credentials=credentials)
@@ -63,13 +53,14 @@ class ReadDataConsumer:
 
         try:
             self.channel = self.connection.channel()
-            self.channel.basic_qos(prefetch_count=1)
 
             self.channel.exchange_declare(exchange=exchangeName, durable=True, exchange_type='direct')
 
             self.channel.queue_declare(queue=queueName, durable=True)
             self.channel.queue_bind(exchange=exchangeName, queue=queueName, routing_key=rountingKey)
-            self.channel.basic_consume(queueName, self.callback, consumer_tag="hello-consumer")
+            self.channel.basic_qos(prefetch_count=1)
+            self.channel.basic_consume(queueName, self.callback,auto_ack=False,consumer_tag="hello-consumer")
+            self.connection.process_data_events()
 
             # self.channel.queue_declare(queue=periodQueueName, durable=True)
             # self.channel.queue_bind(exchange=exchangeName, queue=periodQueueName, routing_key=rountingKey)
@@ -118,11 +109,18 @@ class ReadDataConsumer:
         saveObject.bookName = dict['bookName']
         saveObject.bookId = dict['bookId']
         saveObject.readdate = dict['readDate']
-        saveObject.maxprogress = bookInfo['progressMax']
+        if bookInfo['progressMax'] == None:
+            saveObject.maxprogress = 0
+        else:
+            saveObject.maxprogress = bookInfo['progressMax']
+
         saveObject.state = True
         saveObject.endreadtime = dict["endreadtime"]
 
-        saveObject.save()
+        try:
+            saveObject.save()
+        except:
+            ch.basic_ack(delivery_tag=method.delivery_tag)
 
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
@@ -202,6 +200,8 @@ class ReadDataConsumer:
 
     def signalQuit(self,signum, frame):
         self.channel.stop_consuming(queueName)
+        self.channel.close()
+        self.connection.close()
         # self.channel.stop_consuming(periodQueueName)
 
 
