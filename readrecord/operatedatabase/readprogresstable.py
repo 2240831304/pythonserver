@@ -5,9 +5,11 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-from readrecord.models import readprogress
+from readrecord.models import readprogress,booknamenumber
 from django.db import transaction
 import traceback
+import time
+import math
 
 
 def saveReadData(dataList):
@@ -17,8 +19,23 @@ def saveReadData(dataList):
     for data in dataList:
         saveReadProgressData = readprogress()
 
+        try:
+            reObject = booknamenumber.objects.get(bookname=data.bookName)
+            saveReadProgressData.booknumber = reObject.booknumber
+        except booknamenumber.DoesNotExist:
+            t = time.time()
+            number = int((t * 1000 * 1000) % 1000000)
+            number = int(t) + number
+
+            saveObject = booknamenumber()
+            saveObject.bookname = data.bookName
+            saveObject.booknumber = number
+            saveObject.save()
+
+            saveReadProgressData.booknumber = number
+
         saveReadProgressData.serial = data.serial
-        saveReadProgressData.bookName = data.bookName
+        saveReadProgressData.bookName = ''
         saveReadProgressData.bookId = data.bookId
         saveReadProgressData.progress = data.progress
         saveReadProgressData.readTime = data.readTime

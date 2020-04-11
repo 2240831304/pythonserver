@@ -17,6 +17,7 @@ class readprogress(models.Model):
     wordCount = models.IntegerField()
     pageCount = models.IntegerField()
     dayminprogress = models.IntegerField(default=0)
+    booknumber = models.BigIntegerField(default=0)
 
     class Meta:
         app_label = 'readrecord'
@@ -115,4 +116,15 @@ class timeperioddata(models.Model):
         app_label = 'readrecord'
         db_table = 'timeperioddata'
         verbose_name = '分时间段阅读数据'
+        verbose_name_plural = verbose_name
+
+
+class booknamenumber(models.Model):
+    bookname = models.CharField(max_length=100, db_index=True)
+    booknumber = models.BigIntegerField()
+
+    class Meta:
+        app_label = 'readrecord'
+        db_table = 'booknamenumber'
+        verbose_name = '书名编号'
         verbose_name_plural = verbose_name

@@ -87,17 +87,17 @@ class ReadDataConsumer:
         dict = json.loads(body)
         # print ("ReadDataConsumer callback ,,callback======%r" % dict)
 
-        bookInfo = readprogress.objects.filter(serial=dict['serial'], bookName=dict['bookName'], bookId=dict['bookId']) \
-           .aggregate(progressMax=Max('progress'))
-
         try:
             saveObject = bookreaddata.objects.get(serial=dict['serial'], bookName=dict['bookName'], readdate=dict['readDate'])
             saveObject.dayreadtime = saveObject.dayreadtime + dict['readTime']
             saveObject.dayreadword = saveObject.dayreadword + dict['readWord']
+            if(dict['progress'] > saveObject.maxprogress) :
+                saveObject.maxprogress = dict['progress']
         except bookreaddata.DoesNotExist:
             saveObject = bookreaddata()
             saveObject.dayreadtime = dict['readTime']
             saveObject.dayreadword = dict['readWord']
+            saveObject.maxprogress = dict['progress']
 
             try:
                 recordInfo = bookreaddata.objects.filter(serial=dict['serial']).aggregate(maxRecord=Max('record'))
@@ -109,11 +109,6 @@ class ReadDataConsumer:
         saveObject.bookName = dict['bookName']
         saveObject.bookId = dict['bookId']
         saveObject.readdate = dict['readDate']
-        if bookInfo['progressMax'] == None:
-            saveObject.maxprogress = 0
-        else:
-            saveObject.maxprogress = bookInfo['progressMax']
-
         saveObject.state = True
         saveObject.endreadtime = dict["endreadtime"]
 
