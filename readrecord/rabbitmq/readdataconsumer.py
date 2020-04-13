@@ -105,6 +105,18 @@ class ReadDataConsumer:
             except:
                 saveObject.record = 1
 
+        except bookreaddata.MultipleObjectsReturned:
+            saveObject = bookreaddata()
+            saveObject.dayreadtime = dict['readTime']
+            saveObject.dayreadword = dict['readWord']
+            saveObject.maxprogress = dict['progress']
+
+            try:
+                recordInfo = bookreaddata.objects.filter(serial=dict['serial']).aggregate(maxRecord=Max('record'))
+                saveObject.record = recordInfo['maxRecord'] + 1
+            except:
+                saveObject.record = 1
+
         saveObject.serial = dict['serial']
         saveObject.bookName = dict['bookName']
         saveObject.bookId = dict['bookId']
@@ -114,10 +126,9 @@ class ReadDataConsumer:
 
         try:
             saveObject.save()
+            ch.basic_ack(delivery_tag=method.delivery_tag)
         except:
             ch.basic_ack(delivery_tag=method.delivery_tag)
-
-        ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
     def perioddatacallback(self,ch, method, properties, body):
