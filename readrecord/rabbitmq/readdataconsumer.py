@@ -37,7 +37,7 @@ class ReadDataConsumer:
 
     def connect_mq(self):
         credentials = pika.PlainCredentials(username='guest', password='guest')
-        parameters = pika.ConnectionParameters(host=hostname, credentials=credentials)
+        parameters = pika.ConnectionParameters(host=hostname,heartbeat=0, credentials=credentials)
 
         try:
             self.connection = pika.BlockingConnection(parameters)
@@ -60,7 +60,7 @@ class ReadDataConsumer:
             self.channel.queue_bind(exchange=exchangeName, queue=queueName, routing_key=rountingKey)
             self.channel.basic_qos(prefetch_count=1)
             self.channel.basic_consume(queueName, self.callback,auto_ack=False,consumer_tag="hello-consumer")
-            self.connection.process_data_events()
+            #self.connection.process_data_events()
 
             # self.channel.queue_declare(queue=periodQueueName, durable=True)
             # self.channel.queue_bind(exchange=exchangeName, queue=periodQueueName, routing_key=rountingKey)
