@@ -16,23 +16,33 @@ def saveReadData(dataList):
     product_list_to_insert = list()
     resultCode = '0'
 
+    bookNameTemp = ""
+    bookNumberTemp = 0
+
     for data in dataList:
         saveReadProgressData = readprogress()
 
-        try:
-            reObject = booknamenumber.objects.get(bookname=data.bookName)
-            saveReadProgressData.booknumber = reObject.booknumber
-        except booknamenumber.DoesNotExist:
-            t = time.time()
-            number = int((t * 1000 * 1000) % 1000000)
-            number = int(t) + number
+        if(bookNameTemp != data.bookName):
+            try:
+                reObject = booknamenumber.objects.get(bookname=data.bookName)
+                saveReadProgressData.booknumber = reObject.booknumber
+                bookNumberTemp = reObject.booknumber
+            except booknamenumber.DoesNotExist:
+                t = time.time()
+                number = int((t * 1000 * 1000) % 1000000)
+                number = int(t) + number
 
-            saveObject = booknamenumber()
-            saveObject.bookname = data.bookName
-            saveObject.booknumber = number
-            saveObject.save()
+                saveObject = booknamenumber()
+                saveObject.bookname = data.bookName
+                saveObject.booknumber = number
+                saveObject.save()
 
-            saveReadProgressData.booknumber = number
+                saveReadProgressData.booknumber = number
+                bookNumberTemp = number
+
+            bookNameTemp = data.bookName
+        else:
+            saveReadProgressData.booknumber = bookNumberTemp
 
         saveReadProgressData.serial = data.serial
         saveReadProgressData.bookName = ''
