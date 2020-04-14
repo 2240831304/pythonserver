@@ -59,7 +59,7 @@ class ReadDataConsumer:
             self.channel.queue_declare(queue=queueName, durable=True)
             self.channel.queue_bind(exchange=exchangeName, queue=queueName, routing_key=rountingKey)
             self.channel.basic_qos(prefetch_count=1)
-            self.channel.basic_consume(queueName, self.callback,auto_ack=False,consumer_tag="hello-consumer")
+            self.channel.basic_consume(queueName, self.callback,auto_ack=False,exclusive=True,consumer_tag="hello-consumer")
             #self.connection.process_data_events()
 
             # self.channel.queue_declare(queue=periodQueueName, durable=True)
