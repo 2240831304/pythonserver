@@ -22,3 +22,21 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jiekou.settings")
 
 application = get_wsgi_application()
+
+
+
+from readrecord.rabbitmq import readdataconsumer
+import signal
+
+
+pid = os.fork()
+if  pid == 0:
+
+    objectPt = readdataconsumer.ReadDataConsumer()
+    signal.signal(signal.SIGINT, objectPt.signalQuit)
+    flag = objectPt.connect_mq()
+    if flag:
+        objectPt.startConsumer()
+else:
+    print("parent process ID:%d,main process ID:%d" % (os.getpid(),os.getppid()) )
+
