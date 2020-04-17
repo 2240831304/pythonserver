@@ -68,13 +68,19 @@ class ReadDataConsumer:
 
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
+            self.channel.close()
+            self.connection.close()
             return False
 
         return True
 
 
     def startConsumer(self):
-        self.channel.start_consuming()
+        try:
+            self.channel.start_consuming()
+        except:
+            self.channel.close()
+            self.connection.close()
 
 
     def addQueue(self,name,rountKey):
