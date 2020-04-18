@@ -3,6 +3,7 @@
 import os
 import django
 import sys
+import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(BASE_DIR)
@@ -62,14 +63,17 @@ class ReadDataConsumer:
             self.channel.basic_consume(queueName, self.callback,auto_ack=False,exclusive=True,consumer_tag="hello-consumer")
             #self.connection.process_data_events()
 
-            # self.channel.queue_declare(queue=periodQueueName, durable=True)
-            # self.channel.queue_bind(exchange=exchangeName, queue=periodQueueName, routing_key=rountingKey)
-            # self.channel.basic_consume(periodQueueName, self.perioddatacallback, consumer_tag="consumer")
 
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
-            self.channel.close()
             self.connection.close()
+            path = os.getcwd()
+            filePath = path + "/log/rabbitmq.log"
+            fileHandle = open(filePath, mode='a+')
+            now = datetime.datetime.now()
+            fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
+            fileHandle.write(":consumer connect rabbitmq failse\n")
+            fileHandle.close()
             return False
 
         return True
@@ -79,8 +83,14 @@ class ReadDataConsumer:
         try:
             self.channel.start_consuming()
         except:
-            self.channel.close()
             self.connection.close()
+            path = os.getcwd()
+            filePath = path + "/log/rabbitmq.log"
+            fileHandle = open(filePath, mode='a+')
+            now = datetime.datetime.now()
+            fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
+            fileHandle.write(":start_consuming rabbitmq messages failse\n")
+            fileHandle.close()
 
 
     def addQueue(self,name,rountKey):
