@@ -70,6 +70,7 @@ class ReadDataConsumer:
             path = os.getcwd()
             filePath = path + "/log/rabbitmq.log"
             fileHandle = open(filePath, mode='a+')
+            fileHandle.write("pid:" + str(os.getpid()) + " ")
             now = datetime.datetime.now()
             fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
             fileHandle.write(":consumer connect rabbitmq failse\n")
@@ -87,6 +88,7 @@ class ReadDataConsumer:
             path = os.getcwd()
             filePath = path + "/log/rabbitmq.log"
             fileHandle = open(filePath, mode='a+')
+            fileHandle.write("pid:" + str(os.getpid()) + " ")
             now = datetime.datetime.now()
             fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
             fileHandle.write(":start_consuming rabbitmq messages failse\n")
