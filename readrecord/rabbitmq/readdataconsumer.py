@@ -31,6 +31,7 @@ class ReadDataConsumer:
         # Process.__init__(self)
         self.channel = None
         self.connection = None
+        self.allowConsumer = True
 
     def run(self):
         self.startConsumer()
@@ -223,10 +224,20 @@ class ReadDataConsumer:
         self.channel.stop_consuming(queueName)
 
     def signalQuit(self,signum, frame):
+        print "readdataconsumer signalquit progress quit stop consumer!!!"
+        self.allowConsumer = False
         self.channel.stop_consuming(queueName)
         self.channel.close()
         self.connection.close()
         # self.channel.stop_consuming(periodQueueName)
+
+    def getallowConsumer(self):
+        return self.allowConsumer
+
+    def stopRunConsumer(self):
+        self.channel.stop_consuming(queueName)
+        self.channel.close()
+        self.connection.close()
 
 
 if __name__ == '__main__':
