@@ -51,8 +51,8 @@ class CheckConsumer:
 
     def startChecked(self):
         self.consumerObject = readdataconsumer.ReadDataConsumer()
-        #self.processObj = multiprocessing.Process(target=execute, args=(self.consumerObject,self))
-        self.processObj = multiprocessing.Process(target=executeCheck)
+        self.processObj = multiprocessing.Process(target=execute, args=(self.consumerObject,self))
+        #self.processObj = multiprocessing.Process(target=executeCheck)
         self.processObj.start()
 
         #signal.signal(signal.SIGINT, self.stopChecked)
