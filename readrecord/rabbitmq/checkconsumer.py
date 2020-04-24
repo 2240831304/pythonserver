@@ -29,7 +29,7 @@ def executeCheck(objectPt):
 
     while objectPt.getCheckerState() :
         endtime = datetime.datetime.now()
-        if( ( (endtime - starttime).seconds > 10 ) or isFirstCheck ):
+        if( ( (endtime - starttime).seconds > 600 ) or isFirstCheck ):
             isFirstCheck = False
             starttime = endtime
             pool.apply_async(sustainedChecker)
