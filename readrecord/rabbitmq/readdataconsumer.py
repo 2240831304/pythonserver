@@ -67,7 +67,10 @@ class ReadDataConsumer:
 
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
+            self.allowConsumer = False
+            self.channel.close()
             self.connection.close()
+
             path = os.getcwd()
             filePath = path + "/log/rabbitmq.log"
             fileHandle = open(filePath, mode='a+')
@@ -85,15 +88,9 @@ class ReadDataConsumer:
         try:
             self.channel.start_consuming()
         except:
+            self.channel.close()
             self.connection.close()
-            path = os.getcwd()
-            filePath = path + "/log/rabbitmq.log"
-            fileHandle = open(filePath, mode='a+')
-            fileHandle.write("pid:" + str(os.getpid()) + " ")
-            now = datetime.datetime.now()
-            fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
-            fileHandle.write(":start_consuming rabbitmq messages failse\n")
-            fileHandle.close()
+
 
 
     def addQueue(self,name,rountKey):
@@ -223,16 +220,19 @@ class ReadDataConsumer:
     def quit(self):
         self.channel.stop_consuming(queueName)
 
+
     def signalQuit(self,signum, frame):
         print "readdataconsumer signalquit progress quit stop consumer!!!"
         self.allowConsumer = False
+
         self.channel.stop_consuming(queueName)
         self.channel.close()
         self.connection.close()
-        # self.channel.stop_consuming(periodQueueName)
+
 
     def getallowConsumer(self):
         return self.allowConsumer
+
 
     def stopRunConsumer(self):
         self.channel.stop_consuming(queueName)

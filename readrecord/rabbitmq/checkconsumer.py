@@ -25,7 +25,8 @@ def executeCheck(objectPt):
     starttime = datetime.datetime.now()
 
     isFirstCheck = True
-    pool = multiprocessing.Pool(processes=3)
+    pool = multiprocessing.Pool(processes=1)
+
 
     while objectPt.getCheckerState() :
         endtime = datetime.datetime.now()
@@ -33,8 +34,6 @@ def executeCheck(objectPt):
             isFirstCheck = False
             starttime = endtime
             pool.apply_async(sustainedChecker)
-            # processPt = multiprocessing.Process(target=sustainedChecker)
-            # processPt.start()
 
     pool.close()
     pool.terminate()
@@ -42,17 +41,25 @@ def executeCheck(objectPt):
 
 
 def sustainedChecker():
+    checkerPt = readdataconsumer.ReadDataConsumer()
     try:
-        checkerPt = readdataconsumer.ReadDataConsumer()
         flag = checkerPt.connect_mq()
         if flag:
             signal.signal(signal.SIGINT, checkerPt.signalQuit)
             checkerPt.startConsumer()
     except:
         print "checkconsumer sustainedChecker consumer close rabbitmq server!!"
+        path = os.getcwd()
+        filePath = path + "/log/rabbitmq.log"
+        fileHandle = open(filePath, mode='a+')
+        now = datetime.datetime.now()
+        fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
+        fileHandle.write(":checkconsumer sustainedChecker rabbitmq close consumer \n")
+        fileHandle.close()
 
 
 
+#class CheckConsumer
 
 class CheckConsumer:
 
@@ -78,6 +85,14 @@ class CheckConsumer:
 
     def stopChecked(self,signal,frame):
         self.state = False
+
+        path = os.getcwd()
+        filePath = path + "/log/rabbitmq.log"
+        fileHandle = open(filePath, mode='a+')
+        now = datetime.datetime.now()
+        fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
+        fileHandle.write(":checkconsumer stopChecked rabbitmq  consumer \n")
+        fileHandle.close()
 
 
     def getCheckerState(self):
