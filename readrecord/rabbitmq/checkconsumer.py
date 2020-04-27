@@ -6,18 +6,7 @@ import multiprocessing
 import os
 import signal
 import datetime
-
-
-def execute(consumerObj,checkerObj):
-    print "checkconsumer execute  start run consumer!!!!"
-    try:
-        flag = consumerObj.connect_mq()
-        if flag:
-            signal.signal(signal.SIGINT, consumerObj.signalQuit)
-            consumerObj.startConsumer()
-    except:
-        print "checkconsumer execute consumer close rabbitmq server!!"
-        checkerObj.continueChecked()
+import threading
 
 
 def executeCheck(objectPt):
@@ -59,6 +48,36 @@ def sustainedChecker():
 
 
 
+def pauseConsumer(pt):
+    try:
+        pt.quit()
+    except:
+        print "checkconsumer pauseConsumer is failed!!!!"
+
+
+def execute():
+    timer = threading.Timer(600, execute)
+    timer.start()
+    checkerPt = readdataconsumer.ReadDataConsumer()
+    try:
+        flag = checkerPt.connect_mq()
+        if flag:
+            timer = threading.Timer(300, pauseConsumer,(checkerPt,))
+            timer.start()
+            checkerPt.startConsumer()
+    except:
+        print "checkconsumer execute consumer close rabbitmq server!!"
+        checkerPt.stopRunConsumer()
+
+        path = os.getcwd()
+        filePath = path + "/log/rabbitmq.log"
+        fileHandle = open(filePath, mode='a+')
+        now = datetime.datetime.now()
+        fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
+        fileHandle.write(":checkconsumer execute consumer close rabbitmq server!! \n")
+        fileHandle.close()
+
+
 #class CheckConsumer
 
 class CheckConsumer:
@@ -66,24 +85,14 @@ class CheckConsumer:
     def __init__(self):
         self.state = True
         self.processObj = None
-        self.consumerObject = None
 
 
     def startChecked(self):
-        self.consumerObject = readdataconsumer.ReadDataConsumer()
-        #self.processObj = multiprocessing.Process(target=execute, args=(self.consumerObject,self))
-        self.processObj = multiprocessing.Process(target=executeCheck,args=(self,) )
-        self.processObj.start()
+        timer = threading.Timer(3, execute)
+        timer.start()
 
 
-
-    def continueChecked(self):
-        print "checkconsumer continueChecked is restart=",self.consumerObject.getallowConsumer()
-        if (self.consumerObject.getallowConsumer() and self.state ):
-            self.startChecked()
-
-
-    def stopChecked(self,signal,frame):
+    def stopChecked(self):
         self.state = False
 
         path = os.getcwd()

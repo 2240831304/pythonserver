@@ -24,10 +24,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jiekou.settings")
 application = get_wsgi_application()
 
 
-'''
+
 from readrecord.rabbitmq import checkconsumer
 
 consumerChecker = checkconsumer.CheckConsumer()
 consumerChecker.startChecked()
 
-'''
+
+

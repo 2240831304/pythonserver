@@ -64,7 +64,6 @@ class ReadDataConsumer:
             self.channel.basic_consume(queueName, self.callback,auto_ack=False,exclusive=True,consumer_tag="hello-consumer")
             #self.connection.process_data_events()
 
-
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
             self.allowConsumer = False
@@ -77,7 +76,7 @@ class ReadDataConsumer:
             fileHandle.write("pid:" + str(os.getpid()) + " ")
             now = datetime.datetime.now()
             fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
-            fileHandle.write(":consumer connect rabbitmq failse\n")
+            fileHandle.write(":readdataconsumer consumer connect rabbitmq failse\n")
             fileHandle.close()
             return False
 
@@ -219,6 +218,8 @@ class ReadDataConsumer:
 
     def quit(self):
         self.channel.stop_consuming(queueName)
+        self.channel.close()
+        self.connection.close()
 
 
     def signalQuit(self,signum, frame):
@@ -236,7 +237,7 @@ class ReadDataConsumer:
 
     def stopRunConsumer(self):
         self.channel.stop_consuming(queueName)
-        self.channel.close()
+        #self.channel.close()
         self.connection.close()
 
 
