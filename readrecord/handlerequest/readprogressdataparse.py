@@ -68,10 +68,12 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
                 self.setBookInfo()
 
 
-            if self.dataItem.progress < self.dataObject.progress:
-                self.dataItem.progress = self.dataObject.progress
-            elif self.dataItem.dayminprogress > self.dataObject.progress:
-                self.dataItem.dayminprogress = self.dataObject.progress
+            if self.dataObject.progress <= 1000:
+                if self.dataItem.progress < self.dataObject.progress:
+                    self.dataItem.progress = self.dataObject.progress
+
+            # elif self.dataItem.dayminprogress > self.dataObject.progress:
+            #     self.dataItem.dayminprogress = self.dataObject.progress
             #self.dataItem.startTime = self.dataObject.startTime
             self.dataItem.startTime = int(time.mktime(timeArray))
             self.dataItem.endTime = self.dataObject.endTime
@@ -89,8 +91,8 @@ class ReadProgressHandler(xml.sax.handler.ContentHandler):
         self.dataItem.serial = self.serial
         timeTemp = time.localtime(int(self.dataObject.endTime))
         self.comDate = time.strftime("%Y-%m-%d", timeTemp)
-        self.dataItem.dayminprogress = self.dataObject.progress
-        self.dataItem.progress = self.dataObject.progress
+        #self.dataItem.dayminprogress = self.dataObject.progress
+        #self.dataItem.progress = self.dataObject.progress
 
 
     '''
