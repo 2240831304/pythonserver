@@ -38,7 +38,7 @@ class ReadDataConsumer:
 
 
     def connect_mq(self):
-        credentials = pika.PlainCredentials(username='guest', password='guest')
+        credentials = pika.PlainCredentials(username='guowen', password='guest')
         parameters = pika.ConnectionParameters(host=hostname,heartbeat=0, credentials=credentials)
 
         try:
