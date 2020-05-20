@@ -67,17 +67,17 @@ class ReadDataConsumer:
         except Exception as e:
             print ("ReadDataConsumer channel_mq:", e)
             self.allowConsumer = False
-            self.channel.close()
+            #self.channel.close()
             self.connection.close()
 
-            path = os.getcwd()
-            filePath = path + "/log/rabbitmq.log"
-            fileHandle = open(filePath, mode='a+')
-            fileHandle.write("pid:" + str(os.getpid()) + " ")
-            now = datetime.datetime.now()
-            fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
-            fileHandle.write(":readdataconsumer consumer connect rabbitmq failse\n")
-            fileHandle.close()
+            # path = os.getcwd()
+            # filePath = path + "/log/rabbitmq.log"
+            # fileHandle = open(filePath, mode='a+')
+            # fileHandle.write("pid:" + str(os.getpid()) + " ")
+            # now = datetime.datetime.now()
+            # fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
+            # fileHandle.write(":readdataconsumer consumer connect rabbitmq failse\n")
+            # fileHandle.close()
             return False
 
         return True
@@ -86,9 +86,32 @@ class ReadDataConsumer:
     def startConsumer(self):
         try:
             self.channel.start_consuming()
-        except:
-            self.channel.close()
-            self.connection.close()
+        except Exception as e:
+            print "readdataconsumer.py startConsumer error: ",e
+
+
+    def quit(self):
+        try:
+            self.channel.stop_consuming()
+        except Exception as e:
+            print "readdataconsumer.py quit close consumer error:",e
+
+
+    def signalQuit(self,signum, frame):
+        print "readdataconsumer signalquit progress quit stop consumer!!!"
+        self.allowConsumer = False
+
+        self.channel.stop_consuming(queueName)
+        self.channel.close()
+        self.connection.close()
+
+
+    def getallowConsumer(self):
+        return self.allowConsumer
+
+
+    def stopRunConsumer(self):
+        self.connection.close()
 
 
 
@@ -216,29 +239,6 @@ class ReadDataConsumer:
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
-    def quit(self):
-        self.channel.stop_consuming(queueName)
-        self.channel.close()
-        self.connection.close()
-
-
-    def signalQuit(self,signum, frame):
-        print "readdataconsumer signalquit progress quit stop consumer!!!"
-        self.allowConsumer = False
-
-        self.channel.stop_consuming(queueName)
-        self.channel.close()
-        self.connection.close()
-
-
-    def getallowConsumer(self):
-        return self.allowConsumer
-
-
-    def stopRunConsumer(self):
-        self.channel.stop_consuming(queueName)
-        #self.channel.close()
-        self.connection.close()
 
 
 if __name__ == '__main__':

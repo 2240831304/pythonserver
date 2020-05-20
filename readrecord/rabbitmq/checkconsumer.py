@@ -51,31 +51,34 @@ def sustainedChecker():
 def pauseConsumer(pt):
     try:
         pt.quit()
-    except:
-        print "checkconsumer pauseConsumer is failed!!!!"
+    except Exception as e:
+        print "checkconsumer pauseConsumer error:",e
 
 
 def execute():
-    timer = threading.Timer(600, execute)
-    timer.start()
     checkerPt = readdataconsumer.ReadDataConsumer()
     try:
         flag = checkerPt.connect_mq()
-        if flag:
-            timer = threading.Timer(300, pauseConsumer,(checkerPt,))
-            timer.start()
-            checkerPt.startConsumer()
-    except:
-        print "checkconsumer execute consumer close rabbitmq server!!"
-        checkerPt.stopRunConsumer()
+    except Exception as e:
+        print "checkconsumer execute stop consumer error:", e
 
-        path = os.getcwd()
-        filePath = path + "/log/rabbitmq.log"
-        fileHandle = open(filePath, mode='a+')
-        now = datetime.datetime.now()
-        fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
-        fileHandle.write(":checkconsumer execute consumer close rabbitmq server!! \n")
-        fileHandle.close()
+    if flag:
+        timer = threading.Timer(300, pauseConsumer,(checkerPt,))
+        timer.start()
+        checkerPt.startConsumer()
+
+    checkerPt.stopRunConsumer()
+
+    # path = os.getcwd()
+    # filePath = path + "/log/rabbitmq.log"
+    # fileHandle = open(filePath, mode='a+')
+    # now = datetime.datetime.now()
+    # fileHandle.write(now.strftime("%Y-%m-%d %H:%M:%S"))
+    # fileHandle.write(":checkconsumer execute consumer close rabbitmq server!! \n")
+    # fileHandle.close()
+
+    timer = threading.Timer(600, execute)
+    timer.start()
 
 
 #class CheckConsumer
