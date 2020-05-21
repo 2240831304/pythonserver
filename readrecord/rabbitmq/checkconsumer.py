@@ -56,17 +56,25 @@ def pauseConsumer(pt):
 
 
 def execute():
+    starttimer = threading.Timer(1200, execute)
+    starttimer.start()
+
     checkerPt = readdataconsumer.ReadDataConsumer()
+    flag = False
     try:
         flag = checkerPt.connect_mq()
     except Exception as e:
+        flag = False
         print "checkconsumer execute stop consumer error:", e
 
     if flag:
-        timer = threading.Timer(300, pauseConsumer,(checkerPt,))
-        timer.start()
+        stoptimer = threading.Timer(600, pauseConsumer,(checkerPt,))
+        stoptimer.start()
         checkerPt.startConsumer()
 
+    if stoptimer.isAlive() :
+        print "checkconsumer execute() is  stop_consuming!!!!"
+        stoptimer.cancel()
     checkerPt.stopRunConsumer()
 
     # path = os.getcwd()
@@ -77,8 +85,6 @@ def execute():
     # fileHandle.write(":checkconsumer execute consumer close rabbitmq server!! \n")
     # fileHandle.close()
 
-    timer = threading.Timer(600, execute)
-    timer.start()
 
 
 #class CheckConsumer

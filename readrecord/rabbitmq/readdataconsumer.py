@@ -101,7 +101,7 @@ class ReadDataConsumer:
         print "readdataconsumer signalquit progress quit stop consumer!!!"
         self.allowConsumer = False
 
-        self.channel.stop_consuming(queueName)
+        self.channel.stop_consuming()
         self.channel.close()
         self.connection.close()
 
@@ -111,7 +111,10 @@ class ReadDataConsumer:
 
 
     def stopRunConsumer(self):
-        self.connection.close()
+        try:
+            self.connection.close()
+        except Exception as e:
+            print "readdataconsumer stopRunConsumer error:",e
 
 
 
