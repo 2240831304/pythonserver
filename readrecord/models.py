@@ -90,6 +90,7 @@ class bookreaddata(models.Model):
     state = models.BooleanField(default=False)
     record = models.IntegerField(default=0)
     endreadtime = models.BigIntegerField(default=0,db_index=True)
+    booknumber = models.ForeignKey(to='booknamenumber',to_field='booknumber',default=0)
 
 
     class Meta:
@@ -121,7 +122,7 @@ class timeperioddata(models.Model):
 
 class booknamenumber(models.Model):
     bookname = models.CharField(max_length=100, db_index=True)
-    booknumber = models.BigIntegerField()
+    booknumber = models.BigIntegerField(primary_key=True)
 
     class Meta:
         app_label = 'readrecord'

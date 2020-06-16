@@ -437,8 +437,14 @@ def Hand_ReadProgress_Get(request):
 
 
 def AddReadBookNode(doc, node, data):
+    nameTP = None
+    if str(data['bookName']) :
+        nameTP = str(data['bookName'])
+    else:
+        nameTP = str(data["booknumber__bookname"]).decode('UTF-8')
+
     bookNameNode = doc.createElement("BookName")
-    bookNameText = doc.createTextNode(str(data['bookName']))
+    bookNameText = doc.createTextNode(str(nameTP))
     bookNameNode.appendChild(bookNameText)
 
     bookIdNode = doc.createElement("BookId")

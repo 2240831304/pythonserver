@@ -12,7 +12,7 @@ django.setup()
 
 import pika
 import json
-from readrecord.models import readprogress,bookreaddata,timeperioddata
+from readrecord.models import readprogress,bookreaddata,timeperioddata,booknamenumber
 from django.db.models import Sum,Max,Min
 # from multiprocessing import Process
 from readrecord.readdataprovide import readtimeprovide
@@ -129,7 +129,8 @@ class ReadDataConsumer:
         # print ("ReadDataConsumer callback ,,callback======%r" % dict)
 
         try:
-            saveObject = bookreaddata.objects.get(serial=dict['serial'], bookName=dict['bookName'], readdate=dict['readDate'])
+            booknamenumObject = booknamenumber.objects.get(bookname=dict['bookName'])
+            saveObject = bookreaddata.objects.get(serial=dict['serial'], booknumber_id=booknamenumObject.booknumber, readdate=dict['readDate'])
             saveObject.dayreadtime = saveObject.dayreadtime + dict['readTime']
             saveObject.dayreadword = saveObject.dayreadword + dict['readWord']
             if(dict['progress'] > saveObject.maxprogress) :
@@ -159,7 +160,13 @@ class ReadDataConsumer:
                 saveObject.record = 1
 
         saveObject.serial = dict['serial']
-        saveObject.bookName = dict['bookName']
+
+        if booknamenumObject and (booknamenumObject.booknumber > 0):
+            saveObject.bookName = ""
+            saveObject.booknumber_id = booknamenumObject.booknumber
+        else:
+            saveObject.bookName = dict['bookName']
+
         saveObject.bookId = dict['bookId']
         saveObject.readdate = dict['readDate']
         saveObject.state = True

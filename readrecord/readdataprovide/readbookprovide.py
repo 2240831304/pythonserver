@@ -46,14 +46,16 @@ def updateState(serialID):
 
 
 def getAllReadProgress(serialid,minRecord,maxRecord):
-    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", "readdate","record")\
+    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", \
+                                       "readdate","record","booknumber__bookname")\
         .filter(serial=serialid,record__gt=minRecord,record__lt=maxRecord)
 
     return list
 
 
 def getLoseReadProgress(serialid,minTime,minRecord,maxRecord):
-    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", "readdate","record")\
+    list = bookreaddata.objects.values("bookName", "bookId", "dayreadword", "dayreadtime", "maxprogress", \
+                                       "booknumber__bookname","readdate","record")\
         .filter(serial=serialid,record__gt=minRecord,record__lt=maxRecord,endreadtime__lt=minTime)
 
     return list
@@ -85,4 +87,7 @@ def insertTestData():
 if __name__ == '__main__':
     #getBookReadDataList('234234231234455')
     #getReadDataList('OF6IC31811B00030')
-    insertTestData()
+    #insertTestData()
+    #list = getAllReadProgress('234234231234455',0,2)
+    list = getLoseReadProgress('234234231234455',1599793224,0,2)
+    print (list)
