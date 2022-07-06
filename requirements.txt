@@ -21,7 +21,7 @@ idna==2.7
 image==1.5.24
 ipaddress==1.0.22
 Jinja2==2.10
-lxml==4.2.3
+lxml==4.9.1
 MarkupSafe==1.0
 optionaldict==0.1.1
 oss2==2.5.0
