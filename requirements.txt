@@ -25,7 +25,7 @@ lxml==4.2.3
 MarkupSafe==1.0
 optionaldict==0.1.1
 oss2==2.5.0
-Pillow==5.2.0
+Pillow==9.3.0
 praw==5.4.0
 prawcore==0.14.0
 pycparser==2.18
